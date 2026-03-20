@@ -10,7 +10,7 @@ heroImage: { src: './images/thumbnail.avif', color: '#D58388' }
 
 # Tensors
 
-# Tensors
+## Tensors 是什么
 
 `Tensors` 是一种特殊的数据结构，和**数组**，**矩阵**非常像。在 Pytorch 里面，我们使用 `Tensors` 来编码模型的输入和输出，以及模型的参数。
 
@@ -21,11 +21,11 @@ import torch
 import numpy as np
 ```
 
-# 初始化一个 Tensor
+## 初始化一个 Tensor
 
 Tensors 可以用多种方式进行初始化。如下所示：
 
-## 基于数据
+### 基于数据
 
 Tensors 可以直接用数据创建，数据类型会被自动推断：
 
@@ -34,7 +34,7 @@ data = [[1, 2], [3, 4]]
 x_data = torch.tensor(data)
 ```
 
-## 基于 NumPy 数组
+### 基于 NumPy 数组
 
 Tensors 可以由 NumPy 数组创建：
 
@@ -43,7 +43,7 @@ np_array = np.array(data)
 x_np = torch.from_numpy(np_array)
 ```
 
-## 基于其它 Tensor
+### 基于其它 Tensor
 
 新的 Tensor 会保留参数 Tensor 的特性（比如形状，数据类型），除非显式重写：
 
@@ -67,7 +67,7 @@ Random Tensor:
         [0.9874, 0.9062]])
 ```
 
-## 有随机/恒定值
+### 有随机/恒定值
 
 `shape` 是 Tensor 维度的元组。在下面的函数里，它决定了输出 Tensor 的维度。
 
@@ -98,7 +98,7 @@ Zeros Tensor:
         [0., 0., 0.]])
 ```
 
-# Tensor 的属性
+## Tensor 的属性
 
 Tensor 的属性描述了它们的形状，数据类型，以及在什么设备上储存的。
 
@@ -118,7 +118,7 @@ Datatype of tensor: torch.float32
 Devicd tensor is stored on: cpu
 ```
 
-# 对 Tensors 进行操作
+## 对 Tensors 进行操作
 
 对 Tensor 进行的操作超过 1200 种，其中包括算术，线性代数，矩阵操作（转置，索引和切片），采样。更多内容见下方链接：
 
@@ -129,7 +129,7 @@ if torch.accelerator.is_available():
     tensor = tensor.to(torch.accelerator.current_accelerator())
 ```
 
-## 像 numpy 一样索引和切片
+### 像 numpy 一样索引和切片
 
 ```python
 tensor = torch.ones(4, 4)
@@ -140,11 +140,9 @@ tensor[:, 1] = 0
 print(tensor)
 ```
 
-> [!TIP]
-
-- 这里，`:` 代表 “**选所有**”，因此 `tensor[:, 0]` 代表第一列所有元素。
-- Python 支持**负索引**，`-1` 表示最后一个，`-2` 表示倒数第二个。
-- `...` (ellipsis) 表示 “前面的**所有维度**”。
+> - 这里，`:` 代表 “**选所有**”，因此 `tensor[:, 0]` 代表第一列所有元素。
+> - Python 支持**负索引**，`-1` 表示最后一个，`-2` 表示倒数第二个。
+> - `...` (ellipsis) 表示 “前面的**所有维度**”。
 
 结果为：
 
@@ -161,7 +159,7 @@ tensor([[1., 0., 1., 1.],
         [1., 0., 1., 1.]])
 ```
 
-## Tensor 拼接
+### Tensor 拼接
 
 你可以使用 `torch.cat` 来沿着给定的维度，把一系列 Tensor 拼接起来。`torch.stack` 也是一个向量拼接操作，但是和 `torch.cat` 有微妙的差别。
 
@@ -178,11 +176,10 @@ t2 = torch.stack([tensor, tensor, tensor], dim=1)、
 print(t2)
 ```
 
-> [!TIP]
-> 在这里，`dim` 代表我们**要沿着哪个方向操作**。
 
-- dim=0 代表 **行增加**方向（纵）
-- dim=1 代表 **列增加**方向（横）
+> 在这里，`dim` 代表我们**要沿着哪个方向操作**。
+> - dim=0 代表 **行增加**方向（纵）
+> - dim=1 代表 **列增加**方向（横）
   所以 `dim` 实际上就是**坐标轴编号**。
 
 结果为：
@@ -209,11 +206,11 @@ tensor([[[1., 1., 1., 1.],
          [1., 1., 1., 1.]]])
 ```
 
-## 代数操作
+### 代数操作
 
 PyTorch 里有两种不同的运算，分别是**矩阵乘法**和**逐元素乘法**。
 
-### 矩阵乘法
+#### 矩阵乘法
 
 ```python
 # 下面的代码会演示三种不同实现矩阵乘法的形式
@@ -231,7 +228,7 @@ torch.matmul(tensor, tensor.T, out=y3)
 - `.matmul()` 是 Tensor 的方法形式，与 `@` 等价；
 - `torch.matmul()` 是函数形式，它支持 **out 参数**。在上面的例子里面，结果直接写入 y3。这样做能减少 GPU memory allocation。
 
-### 逐元素乘法
+#### 逐元素乘法
 
 ```python
 # 下面的代码会演示三种不同实现矩阵逐元素乘法的形式
@@ -275,7 +272,7 @@ Result of matrix element-wise product:
         [0.4018, 0.9626, 0.3022]])
 ```
 
-## 单元素 Tensors
+### 单元素 Tensors
 
 如果有一个单元素的 Tensor（比如把一个 Tensor 的所有值聚合在一起了），可以用 `item()` 把它转换为 Python 数值。
 
@@ -291,7 +288,7 @@ print(agg_item, type(agg_item))
 3.21058988571167 <class 'float'>
 ```
 
-## In-place 操作
+### In-place 操作
 
 把结果存在操作数里的操作，叫做 `in-place`。他们用下划线 `_` 表示。比如：
 
@@ -316,11 +313,11 @@ Tensor after in-place operation:
 > [!TIP]
 > In-place 操作能够节省一些内存，但由于其会立即丢失历史，在计算导数时可能会出现问题。因此，不建议使用 In-place 操作。
 
-# 与 NumPy 的转换
+## 与 NumPy 的转换
 
 在 CPU 上的 Tensors 和 NumPy arrays 可以共享底层内存地址，**改变其中一个也会影响另外一个**。
 
-## Tensor 转换为 NumPy 数组
+### Tensor 转换为 NumPy 数组
 
 ```python
 t = torch.ones(5)
@@ -351,7 +348,7 @@ t: tensor([2., 2., 2., 2., 2.])
 n: [2. 2. 2. 2. 2.]
 ```
 
-## NumPy 数组转换为 Tensor
+### NumPy 数组转换为 Tensor
 
 ```python
 n = np.ones(5)
@@ -381,7 +378,7 @@ PyTorch 提供了两个东西：`torch.utils.data.DataLoader` 和 `torch.utils.d
 
 PyTorch 领域库提供了很多预先加载的数据集，比如 FashionMNIST 等。
 
-# 加载数据集
+## 加载数据集
 
 下面这个例子展示了如何从 TorchVision 里加载 Fashion-MNIST 数据集。这个数据集由 60,000 个训练样例和 10,000 个测试样例组成，每个样例为一个 28*28 的灰度图和 1 个标签（总共 10 个标签）。
 
@@ -414,13 +411,11 @@ test_data = datasets.FashionMNIST(
 )
 ```
 
-> [!TIP]
 > `transform=ToTensor()` 的意思是，对数据做了预处理。它做了两件事：
+> 1. 把**图像转为了 Tensor**。原始数据是 PIL Image，它把数据转换成了 `torch.Tensor`。
+> 2. **像素归一化**。原始像素为 0~255，转换后则变成了 0~1，也就是 `pixel / 255`。这样更适合神经网络训练。
 
-1. 把**图像转为了 Tensor**。原始数据是 PIL Image，它把数据转换成了 `torch.Tensor`。
-2. **像素归一化**。原始像素为 0~255，转换后则变成了 0~1，也就是 `pixel / 255`。这样更适合神经网络训练。
-
-# 数据集的迭代和可视化
+## 数据集的迭代和可视化
 
 我们可以像创建列表一样手动为 `Datasets` 添加索引：`training_data[index]`。我们使用 `matplotlib` 来可视化我们训练数据中的一些例子。
 
@@ -454,7 +449,7 @@ plt.show()
 
 ![Dataset_preview](./images/dataset_preview.png)
 
-# 为你的文件创建自定义数据集
+## 为你的文件创建自定义数据集
 
 自定义数据集类必须包含三个函数：`__init__`，`__len__` 和 `__getitem__`。可以参考下面的实现方式，FashionMNIST 的图像存在 `img_dir` 下，它们的标签分别存储在叫做 `annotations_file` 的 CSV 文件里。
 
@@ -486,7 +481,7 @@ class CustomImageDataset(Dataset):
         return image, label
 ```
 
-## `__init__`
+### `__init__`
 
 `__init__` 函数在实例化数据集对象时运行一次。我们初始化目录包括**图像**，**标记文件**和**两种变换**（下一节会详细介绍）。
 
@@ -507,7 +502,7 @@ def __init__(self, annotations_file, img_dir, transform=None, target_transform=N
     self.target_transform = target_transform
 ```
 
-## `__len__`
+### `__len__`
 
 `__len__` 函数返回我们数据集的**样本总数**，示例：
 
@@ -516,7 +511,7 @@ def __len__(self):
     return len(self.img_labels)
 ```
 
-## `__getitem__`
+### `__getitem__`
 
 `__getitem__` 函数可以**加载**或**返回**数据集里，索引为 `idx` 的那个样本。基于索引，它能确定图像在磁盘上的位置，使用 `decode_image` 将其转换为 Tensor，从 `self.img_labels` 这个 `.csv` 文件中检索相应的标签，调用变换函数（如果适用的话），并将张量图像和相应的标签以**元组**的形式返回。
 
@@ -532,14 +527,12 @@ def __getitem__(self, idx):
     return image, label
 ```
 
-> [!TIP]
 > 结构可以理解为：
+> - __init__ -> 初始化数据
+> - __len__ -> 数据数量
+> - __getitem__ -> 取一条数据
 
-- __init__ -> 初始化数据
-- __len__ -> 数据数量
-- __getitem__ -> 取一条数据
-
-# 用 DataLoaders 准备用于训练的数据
+## 用 DataLoaders 准备用于训练的数据
 
 `Dataset` 一次检索一个样本的特征并进行标记。在训练模型时，我们通常希望以 “minibatches” 的形式传递样本，在每个 epoch 对数据进行重新打乱顺序，以减少模型过拟合，并使用 Python 的 `multiprocessing` 来加速数据检索。
 
@@ -552,7 +545,7 @@ train_dataloader = DataLoader(training_data, batch_size=64, shuffle=True)
 test_dataloader = DataLoader(test_data, batch_size=64, shuffle=True)
 ```
 
-# 用 DataLoader 进行迭代
+## 用 DataLoader 进行迭代
 
 我们已经把数据集加载到 `DataLoader` 里，并能够根据需要对数据集进行迭代。下面的每次迭代都会返回一个 batch 的 `train_features` 和 `train_labels`（分别包括 `batch=64` 个特征和标签）。由于我们指定了 `shuffle=True`，在我们迭代之后，所有数据都被打乱了。
 
@@ -576,8 +569,6 @@ Feature batch shape: torch.Size([64, 1, 28, 28])
 Labels batch shape: torch.Size([64])
 Label: 2
 ```
-
-# Transforms
 
 # Transforms
 
@@ -606,17 +597,17 @@ ds = datasets.FashionMNIST(
 )
 ```
 
-# ToTensor()
+## ToTensor()
 
 ToTensor 可以把 PIL image 或者 NumPy `ndarry` 转换成 `FloatTensor`。并且把图片的像素归一化到 0~1 的范围内。
 
-# Lambda Transforms
+## Lambda Transforms
 
 Lambda transforms 可以应用任何用户定义的 `lambda` 函数。这里，我们定义了一个函数，将整数转换为了独热编码 Tensor。它首先创建了一个大小为 10 的零张量（即数据集中的标签数量），然后调用 `scatter_` 函数，这个函数将标签 `y` 对应的索引赋值为 1。
 
 # 模型搭建
 
-# 搭建神经网络
+## 搭建神经网络
 
 神经网络由多个层 / 模块组成，这些层 / 模块可以对数据执行操作。`torch.nn` 这个命名空间可以提供我们所需要的所有模块，来搭建我们自己的神经网络。
 
@@ -632,7 +623,7 @@ from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 ```
 
-## 获取训练设备
+### 获取训练设备
 
 我们想让我们的模型能够在加速器上（如 CUDA，MPS，MTIA 或 XPU）训练。如果现有的加速器是可用的，我们就使用它，否则就使用 CPU。
 
@@ -647,7 +638,7 @@ print(f"Using {device} device")
 Using cuda device
 ```
 
-## 定义 Class
+### 定义 Class
 
 我们继承 `nn.Module` 定义我们的神经网络，并且用 `__init__` 初始化我们的神经网络层。每个 `nn.Module` 子类都在 `forward` 里实现了对输入数据的操作。
 
@@ -719,7 +710,7 @@ print(f"Predicted class: {y_pred}")
 Predicted class: tensor([1], device='cuda:0')
 ```
 
-# 模型层
+## 模型层
 
 让我们分解 `FashionMNIST` 模型的所有层。为了便于说明，我们会以包含 3 张图的 minibatch 为例，每张图大小为 28 * 28，看看如果我们让它通过网络，会发生什么。
 
@@ -734,7 +725,7 @@ print(input_image.size())
 torch.Size([3, 28, 28])
 ```
 
-## nn.Flatten
+### nn.Flatten
 
 我们初始化 `nn.Flatten` 层，来把二维的 28 * 28 大小的图像转换成一个有 784 像素值的连续数组（minibatch 维度（dim=0）保留）。
 
@@ -750,7 +741,7 @@ print(flat_image.size())
 torch.Size([3, 784])
 ```
 
-## nn.Linear
+### nn.Linear
 
 线性层是一个模块，它用它所储存的权重和偏置，对 **输入** 应用一个线性的变换。
 
@@ -766,7 +757,7 @@ print(hidden1.size)
 torch.Size([3, 20])
 ```
 
-## nn.ReLU
+### nn.ReLU
 
 非线性激活函数创建了模型输入输出之间的复杂映射关系。它们在线性变换之后被应用，来增加模型的非线性性，帮助神经网络学习各种各样的现象。
 
@@ -776,7 +767,7 @@ $$
 \text{ReLU}(x) = (x)^+ = \max(0, x)
 $$
 
-![](file:///home/samxander/feishu/feishu2md/static/LiugbaqiPoJ3axxEc4hcXaMqnZd.png?msec=1774000227779)
+![ReLU_diagram](./images/ReLU.png)
 
 ```python
 print(f"Before ReLU: {hidden1} \n\n")
@@ -809,7 +800,7 @@ After ReLU: tensor([[0.0000, 0.4621, 0.0000, 0.4787, 0.0000, 0.3044, 0.0000, 0.0
          0.0794, 0.1836]], grad_fn=<ReluBackward0>)
 ```
 
-## nn.Sequential
+### nn.Sequential
 
 `nn.Sequential` 是一个有序的模块容器。数据会按照定义的顺序，在所有模块中传递。你可以使用顺序容器快速构建类似 `seq_modules` 的网络。
 
@@ -824,7 +815,7 @@ input_image = torch.rand(3, 28, 28)
 logits = seq_modules(input_image)
 ```
 
-## nn.Softmax
+### nn.Softmax
 
 神经网络的最后一个线性层会返回 `[-infty, +infty]` 范围内的原始 logits 值，这些值被传递给 `nn.Softmax` 模块。logits 值被缩放到 `[0, 1]` 范围内，表示模型对每个类别的预测概率。`dim` 参数指示值之和必须为 1 的维度。
 
@@ -833,7 +824,7 @@ softmax = nn.Softmax(dim=1)
 pred_probab = softmax(logits)
 ```
 
-# 模型参数
+## 模型参数
 
 神经网络中的很多层都是参数化的，即他们都有相关的权重和偏置，这些权重会在训练过程中进行优化。继承 `nn.Module` 类会自动跟踪模型对象中定义的所有字段，并使得所有参数都可以通过模型的 `parameters()` 或 `named_parameters()` 方法访问。在本例中，我们将遍历每个参数，并打印其大小和值的预览。
 
@@ -861,19 +852,17 @@ Name: linear_relu_stack.4.weight | Size: torch.Size([10, 512]) | Value: tensor([
 Name: linear_relu_stack.4.bias | Size: torch.Size([10]) | Value: tensor([0.0377, 0.0124], device='cuda:0', grad_fn=<SliceBackward0>)
 ```
 
-> [!TIP]
 > 为什么结果只有 0，2，4？因为 1 和 3 都是 `ReLU()`，没有参数！
-
-1. 第一层：输入层（`linear_relu_stack.0`）
-  1. **Weight [512, 784] **表示有 512 个神经元，每个神经元连接 784 个输入像素。实际上可以理解为 784 维的图像向量进来后，会和 512 * 784 的矩阵相乘，最后变成 512 维。每个神经元都有 一个偏置分数，总共 512 个。
-2. 第二层：中间层（`linear_relu_stack.2`）
-  1. **Weight [512, 512] **是一个方阵，它把前一层的 512 个特征进一步加工，映射到另一组 512 个特征中。
-3. 第三层：输出层（`linear_relu_stack.4`）
-  1. **Weight [10, 512]** 表示最后把 512 个抽象特征压缩成 10 个数字。
+> 1. 第一层：输入层（`linear_relu_stack.0`）
+> - **Weight [512, 784] **表示有 512 个神经元，每个神经元连接 784 个输入像素。实际上可以理解为 784 维的图像向量进来后，会和 512 * 784 的矩阵相乘，最后变成 512 维。每个神经元都有 一个偏置分数，总共 512 个。
+> 2. 第二层：中间层（`linear_relu_stack.2`）
+> - **Weight [512, 512] **是一个方阵，它把前一层的 512 个特征进一步加工，映射到另一组 512 个特征中。
+> 3. 第三层：输出层（`linear_relu_stack.4`）
+> - **Weight [10, 512]** 表示最后把 512 个抽象特征压缩成 10 个数字。
 
 # 自动求导
 
-# 用 `torch.autograd` 实现自动微分
+## 用 `torch.autograd` 实现自动微分
 
 在训练神经网络时，最常使用的算法就是**反向传播**。在这个算法里，参数（模型权重）会根据损失函数相对于给定参数的梯度，进行调整。
 
@@ -892,15 +881,15 @@ z = torch.matmul(x, w) + b
 loss = torch.nn.functional.binary_cross_entropy_with_logits(z, y)
 ```
 
-# Tensors, 函数和计算图
+## Tensors, 函数和计算图
 
 上面的代码定义了下面的**计算图**：
 
-![](file:///home/samxander/feishu/feishu2md/static/KtP5bvMXPobuvSxJhPicLMjnn1c.png?msec=1774000280856)
+![](./images/comtuping_pic.PNG)
 
 在这个网络里，`w` 和 `b` 都是我们需要优化的参数。因此，我们需要能够计算损失函数相对于这些参数的梯度。为了实现这个目标，我们设置了这些 Tensors 的 `required_grad` 属性。
 
-> [!TIP]
+
 > 你可以在创建一个 tensor 时，设定 `requires_grad` 的值；或者后面使用 `x.requires_grad_(True)` 方法。
 
 我们用于构建计算图的张量函数，实际上是 `Function` 类的对象。这个对象知道在前向过程中如何计算函数，以及如何在反向传播阶段计算它们的导数。Tensor 的 `grad_fn` 属性存储着对反向传播函数的引用。
@@ -917,7 +906,7 @@ Gradient function for z: <AddBackward0 object at 0x7f81c8cd4640>
 Gradient function for loss: <BinaryCrossEntropyWithLogitsBackward0 object at 0x7f81c8cd4640>
 ```
 
-# 计算梯度
+## 计算梯度
 
 为了优化神经网络里参数的权重，我们需要计算损失函数相对于参数的导数，也就是说，在固定的 `x` 和 `y` 值下，我们需要 $\frac{\partial \text{loss}}{\partial w}$ 和 $\frac{\partial \text{loss}}{\partial b}$。为了计算这些导数，我们调用 `loss.backward()`，然后从 `w.grad` 和 `b.grad` 中检索值：
 
@@ -938,22 +927,16 @@ tensor([[0.2349, 0.2967, 0.2756],
 tensor([0.2349, 0.2967, 0.2756])
 ```
 
-> [!TIP]
+> - 我们只能获取计算图中叶节点的 `grad` 属性，这些叶节点的 `required_grad` 属性设定为 `True`。对于图中的其他节点，梯度信息无法获取；
+> - 出于性能的考量，在一张给定的计算图上，我们只能用一次 `backward` 来进行梯度计算。如果我们需要在同一个图上进行多次 `backward` 的调用，我们需要把 `retain_graph=True` 传递给 `backward` 调用。
 
-- 我们只能获取计算图中叶节点的 `grad` 属性，这些叶节点的 `required_grad` 属性设定为 `True`。对于图中的其他节点，梯度信息无法获取；
-- 出于性能的考量，在一张给定的计算图上，我们只能用一次 `backward` 来进行梯度计算。如果我们需要在同一个图上进行多次 `backward` 的调用，我们需要把 `retain_graph=True` 传递给 `backward` 调用。
-
-> [!TIP]
 > 在 PyTorch 的计算图中，节点分为**叶子节点**（Leaf Nodes）和**中间节点**。
+> 1. **叶子结点：**直接创建的，不是由任何数学操作（如加减乘除，矩阵相乘）生成的张量；
+> 2. 在上面的例子中，`x, y, w, b` 都是叶节点；`z` 不是叶节点，它是通过矩阵乘法和 + 计算出来的；`loss` 不是叶节点，它是通过 `binary_cross_entropy_with_logits` 计算出来的。
+> 只有 `requires_grad=True` 的叶子节点才有 `.grad`。PyTorch 的原则是：**为了节省内存，只保留你最需要的东西。**在训练中，我们最终需要更新的是**权重**和**偏置**。因此，当调用 `loss.backward()` 后：
+> - `w.grad` 会有值。
+> - `b.grad` 会有值。
+> - `z.grad` 虽然在链式法则中被计算过，但它会被**立即销毁**，结果为 `None`（因为它不是叶子节点）。
+> - `x.grad` 为 `None`（虽然它是叶子节点，但它的 `requires_grad=False`）。
 
-1. **叶子结点：**直接创建的，不是由任何数学操作（如加减乘除，矩阵相乘）生成的张量；
-2. 在上面的例子中，`x, y, w, b` 都是叶节点；`z` 不是叶节点，它是通过矩阵乘法和 + 计算出来的；`loss` 不是叶节点，它是通过 `binary_cross_entropy_with_logits` 计算出来的。
-
-只有 `requires_grad=True` 的叶子节点才有 `.grad`。PyTorch 的原则是：**为了节省内存，只保留你最需要的东西。**在训练中，我们最终需要更新的是**权重**和**偏置**。因此，当调用 `loss.backward()` 后：
-
-- `w.grad` 会有值。
-- `b.grad` 会有值。
-- `z.grad` 虽然在链式法则中被计算过，但它会被**立即销毁**，结果为 `None`（因为它不是叶子节点）。
-- `x.grad` 为 `None`（虽然它是叶子节点，但它的 `requires_grad=False`）。
-
-# 禁止梯度追踪
+## 禁止梯度追踪
