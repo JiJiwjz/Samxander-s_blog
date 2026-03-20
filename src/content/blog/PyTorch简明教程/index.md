@@ -1,12 +1,11 @@
 ---
 title: 'PyTorch Tutorials'
-publishDate: 2026-03-20
+date: 2026-03-20
 description: 'PyTorch 官方教程的中文翻译版本，添加了一些官网没有描述清楚的内容。通过这个教程，可以入门 PyTorch 的基本操作。'
 tags:
   - PyTorch
   - Deep Learning
-language: 'Chinese'
-heroImage: { src: '', color: '#D58388' }
+heroImage: { color: '#D58388' }
 ---
 
 # Tensors
