@@ -453,7 +453,7 @@ plt.show()
 
 结果大致如下：
 
-![](file:///home/samxander/feishu/feishu2md/static/BsYvbzK8Poblo0xwhjbcuCMgnGa.png?msec=1774000090715)
+![Dataset_preview](./images/dataset_preview.png)
 
 # 为你的文件创建自定义数据集
 
