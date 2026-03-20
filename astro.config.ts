@@ -25,7 +25,7 @@ import config from './src/site.config.ts'
 // https://astro.build/config
 export default defineConfig({
   // [Basic]
-  site: 'https://astro-pure.js.org',
+  site: 'https://sam-blog.vercel.app', // 部署后替换为真实 Vercel 域名
   // Deploy to a sub path
   // https://astro-pure.js.org/docs/setup/deployment#platform-with-base-path
   // base: '/astro-pure/',
@@ -123,11 +123,6 @@ export default defineConfig({
         provider: fontProviders.fontshare(),
         name: 'Satoshi',
         cssVariable: '--font-satoshi',
-        // Default included:
-        // weights: [400],
-        // styles: ["normal", "italics"],
-        // subsets: ["cyrillic-ext", "cyrillic", "greek-ext", "greek", "vietnamese", "latin-ext", "latin"],
-        // fallbacks: ["sans-serif"],
         styles: ['normal', 'italic'],
         weights: [400, 500],
         subsets: ['latin']
