@@ -13,7 +13,7 @@ import config from '@/site-config'
 
 const languages = ['C++', 'Python']
 const framework = ['Pytorch', 'OpenCV', 'ROS']
-const Research = ['Image Restoration']
+const research = ['Image Restoration']
 
 const MAX_POSTS = 10
 const allPosts = await getBlogCollection()
@@ -171,8 +171,8 @@ if (!images[imagePath])
 
       <Section title='Skills'>
         <SkillLayout title='Languages' skills={languages} />
-        <SkillLayout title='Frontend' skills={frontend} />
-        <SkillLayout title='Backend' skills={backend} />
+        <SkillLayout title='Framework' skills={framework} />
+        <SkillLayout title='Research' skills={research} />
       </Section>
     </div>
     <Quote class='mt-12' />
