@@ -35,7 +35,7 @@ const {
   comment: enableComment
 } = data
 
-const socialImage = heroImage
+const socialImage = heroImage?.src
   ? typeof heroImage.src === 'string'
     ? heroImage.src
     : heroImage.src.src
