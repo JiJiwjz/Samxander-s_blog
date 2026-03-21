@@ -79,7 +79,7 @@ if (!images[imagePath])
                       {p.data.title}
                     </span>
                     <span class='shrink-0 text-xs text-muted-foreground'>
-                      {p.data.publishDate.toLocaleDateString(config.locale.dateLocale, config.locale.dateOptions)}
+                      {p.data.publishDate?.toLocaleDateString(config.locale.dateLocale, config.locale.dateOptions)}
                     </span>
                   </div>
                   {p.data.description && (
