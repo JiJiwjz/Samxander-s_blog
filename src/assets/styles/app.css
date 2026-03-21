@@ -40,7 +40,7 @@ html.dark {
 }
 
 /* Waline: hide subscription button (SMTP not configured) */
-#waline .wl-action:last-child {
+#waline a[href*="/api/comment/rss"] {
   display: none !important;
 }
 
