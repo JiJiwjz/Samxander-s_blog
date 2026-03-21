@@ -39,6 +39,12 @@ html.dark {
   color-scheme: dark;
 }
 
+/* Waline: hide subscription button (SMTP not configured) */
+.wl-action[aria-label*="ubscri"],
+.wl-action[title*="ubscri"] {
+  display: none !important;
+}
+
 /* Global */
 a {
   transition: color 0.2s ease;
