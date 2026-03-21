@@ -151,9 +151,9 @@ export const integ: IntegrationUserConfig = {
   },
   // Comment system
   waline: {
-    enable: false, // 先关闭，部署 Waline 后填入你自己的 server 地址
+    enable: true,
     // Server service link
-    server: 'https://your-waline-server.vercel.app/',
+    server: 'https://waline-server-lac-nine.vercel.app/',
     // Show meta info for comments
     showMeta: false,
     // Refer https://waline.js.org/en/guide/features/emoji.html
