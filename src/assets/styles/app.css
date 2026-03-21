@@ -40,8 +40,7 @@ html.dark {
 }
 
 /* Waline: hide subscription button (SMTP not configured) */
-.wl-action[aria-label*="ubscri"],
-.wl-action[title*="ubscri"] {
+#waline .wl-action:last-child {
   display: none !important;
 }
 
