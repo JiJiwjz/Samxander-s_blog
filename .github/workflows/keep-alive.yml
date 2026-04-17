@@ -1,0 +1,17 @@
+name: Keep Supabase Alive
+
+on:
+  schedule:
+    # 每天北京时间 12:00 执行（UTC 04:00）
+    - cron: '0 4 * * *'
+  workflow_dispatch: # 允许手动触发
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Waline API
+        run: |
+          curl -sf "https://waline.samxander.cn/api/comment?path=/" \
+            -H "User-Agent: keep-alive-bot" \
+            --max-time 15 || echo "Ping failed but continuing"
