@@ -1,12 +1,13 @@
 ---
 import { Image } from 'astro:assets'
+import type { CollectionEntry } from 'astro:content'
 
 import { Quote } from 'astro-pure/advanced'
 import { getBlogCollection, sortMDByDate } from 'astro-pure/server'
 import { Button, Card, Icon, Label } from 'astro-pure/user'
 import nwpuLogo from '@/assets/nwpu.png'
 import robocupPhoto from '@/assets/robocup.jpg'
-import robotArmPhoto from '@/content/blog/不让机械臂摆烂，但人可以/Arm.png'
+import robotArmPhoto from '../content/blog/不让机械臂摆烂，但人可以/Arm.png'
 import PageLayout from '@/layouts/BaseLayout.astro'
 import Section from '@/components/home/Section.astro'
 import SkillLayout from '@/components/home/SkillLayout.astro'
@@ -17,8 +18,8 @@ const framework = ['Pytorch', 'OpenCV', 'ROS']
 const research = ['Image Restoration', 'Robotics']
 
 const MAX_POSTS = 10
-const allPosts = await getBlogCollection()
-const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
+const allPosts = (await getBlogCollection()) as CollectionEntry<'blog'>[]
+const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS) as CollectionEntry<'blog'>[]
 
 const imagePath = config.logo.src
 const images = import.meta.glob<{ default: ImageMetadata }>(
@@ -88,30 +89,48 @@ if (!images[imagePath])
               {allPostsByDate.map((p) => (
                 <a
                   href={`/blog/${p.id}`}
-                  class='group flex flex-col gap-y-2 rounded-2xl border bg-muted px-5 py-3 transition-all hover:border-foreground/25 hover:shadow-sm'
+                  class='group relative isolate overflow-hidden rounded-2xl border bg-muted px-5 py-3 transition-all hover:border-foreground/25 hover:shadow-sm'
                 >
-                  <div class='flex items-center justify-between gap-x-2'>
-                    <span class='line-clamp-1 font-medium group-hover:text-primary transition-colors'>
-                      {p.data.title}
-                    </span>
-                    <span class='shrink-0 text-xs text-muted-foreground'>
-                      {p.data.publishDate?.toLocaleDateString(config.locale.dateLocale, config.locale.dateOptions)}
-                    </span>
-                  </div>
-                  {p.data.description && (
-                    <p class='line-clamp-2 text-sm text-muted-foreground'>
-                      {p.data.description}
-                    </p>
-                  )}
-                  {p.data.tags.length > 0 && (
-                    <div class='flex flex-wrap gap-1.5'>
-                      {p.data.tags.slice(0, 3).map((tag) => (
-                        <span class='rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground'>
-                          {tag}
-                        </span>
-                      ))}
+                  {
+                    p.data.heroImage && (
+                      <>
+                        <Image
+                          alt={p.data.heroImage.alt || p.data.title}
+                          class='absolute inset-y-0 right-0 z-0 h-full w-[46%] object-cover opacity-60 transition duration-500 group-hover:scale-105 group-hover:opacity-80'
+                          loading='lazy'
+                          {...p.data.heroImage}
+                        />
+                        <div
+                          aria-hidden='true'
+                          class='pointer-events-none absolute inset-y-0 right-0 z-10 w-[62%] bg-gradient-to-r from-muted via-muted/85 to-muted/15 backdrop-blur-sm'
+                        ></div>
+                      </>
+                    )
+                  }
+                  <div class='relative z-20 flex flex-col gap-y-2'>
+                    <div class='flex items-center justify-between gap-x-2'>
+                      <span class='line-clamp-1 font-medium group-hover:text-primary transition-colors'>
+                        {p.data.title}
+                      </span>
+                      <span class='shrink-0 text-xs text-muted-foreground'>
+                        {p.data.publishDate?.toLocaleDateString(config.locale.dateLocale, config.locale.dateOptions)}
+                      </span>
                     </div>
-                  )}
+                    {p.data.description && (
+                      <p class='line-clamp-2 text-sm text-muted-foreground'>
+                        {p.data.description}
+                      </p>
+                    )}
+                    {p.data.tags.length > 0 && (
+                      <div class='flex flex-wrap gap-1.5'>
+                        {p.data.tags.slice(0, 3).map((tag) => (
+                          <span class='rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground'>
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </a>
               ))}
             </div>
