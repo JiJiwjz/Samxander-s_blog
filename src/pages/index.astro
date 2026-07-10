@@ -8,6 +8,7 @@ import { Button, Card, Icon, Label } from 'astro-pure/user'
 import nwpuLogo from '@/assets/nwpu.png'
 import rescuePhoto from '@/assets/rescue.png'
 import robocupPhoto from '@/assets/robocup.jpg'
+import zhongguancunAcademyLogo from '@/assets/zhongguancun-academy.png'
 import PageLayout from '@/layouts/BaseLayout.astro'
 import Section from '@/components/home/Section.astro'
 import SkillLayout from '@/components/home/SkillLayout.astro'
@@ -186,6 +187,18 @@ if (!images[imagePath])
             src={nwpuLogo}
             alt='Northwestern Polytechnical University logo'
             class='absolute right-5 top-1/2 size-16 -translate-y-1/2 object-contain'
+          />
+        </Card>
+        <Card
+          heading='Zhongguancun Academy'
+          subheading='Visiting Student, Embodied AI, AI Core'
+          date='July 2026 - Present'
+          class='pr-48'
+        >
+          <Image
+            src={zhongguancunAcademyLogo}
+            alt='Zhongguancun Academy logo'
+            class='absolute right-5 top-1/2 h-10 w-36 -translate-y-1/2 object-contain'
           />
         </Card>
       </Section>
