@@ -6,8 +6,8 @@ import { Quote } from 'astro-pure/advanced'
 import { getBlogCollection, sortMDByDate } from 'astro-pure/server'
 import { Button, Card, Icon, Label } from 'astro-pure/user'
 import nwpuLogo from '@/assets/nwpu.png'
+import rescuePhoto from '@/assets/rescue.png'
 import robocupPhoto from '@/assets/robocup.jpg'
-import robotArmPhoto from '../content/blog/不让机械臂摆烂，但人可以/Arm.png'
 import PageLayout from '@/layouts/BaseLayout.astro'
 import Section from '@/components/home/Section.astro'
 import SkillLayout from '@/components/home/SkillLayout.astro'
@@ -183,23 +183,28 @@ if (!images[imagePath])
       </Section>
 
       <Section title='Projects'>
-        <a
-          href='/blog/不让机械臂摆烂，但人可以/不让机械臂摆烂，但人可以'
-          class='not-prose grid overflow-hidden rounded-2xl border bg-muted transition-all hover:border-foreground/25 hover:shadow-sm sm:min-h-48 sm:grid-cols-[16rem_minmax(0,1fr)]'
-        >
+        <article class='not-prose grid overflow-hidden rounded-2xl border bg-muted sm:min-h-48 sm:grid-cols-[16rem_minmax(0,1fr)]'>
           <Image
-            src={robotArmPhoto}
-            alt='Vision-servoed robotic arm system'
+            src={rescuePhoto}
+            alt='NPU Dancing Robot Base Rescue Team'
             class='aspect-video w-full object-cover sm:aspect-auto sm:h-full'
           />
           <div class='flex flex-col justify-center gap-y-1.5 px-5 py-4'>
-            <h2 class='text-lg font-medium'>Vision-Servoed Robotic Manipulation System</h2>
+            <h2 class='text-lg font-medium'>Rescue Team - NPU Dancing Robot Base</h2>
             <p class='text-muted-foreground'>
-              A closed-loop visual servoing system for autonomous bottle-cap grasping and twisting
-              with a 7-DOF robotic arm.
+              Mission: Locate and mark victims distributed across a simulated disaster environment.
+            </p>
+            <p class='text-muted-foreground'>
+              I am primarily responsible for manipulator software control. I refined remote
+              teleoperation, developed MoveIt-based semi-autonomous arm control, and implemented
+              fully autonomous grasping through pose estimation, visual servoing, and inverse
+              kinematics.
+            </p>
+            <p class='text-muted-foreground'>
+              Website: <a href='https://dance-robot-base.github.io/' target='_blank' rel='noopener noreferrer'>Dancing Robot Base official website</a>
             </p>
           </div>
-        </a>
+        </article>
       </Section>
 
       <Section title='Honors'>
