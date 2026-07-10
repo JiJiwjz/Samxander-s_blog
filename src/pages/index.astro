@@ -5,6 +5,7 @@ import type { CollectionEntry } from 'astro:content'
 import { Quote } from 'astro-pure/advanced'
 import { getBlogCollection, sortMDByDate } from 'astro-pure/server'
 import { Button, Card, Icon, Label } from 'astro-pure/user'
+import firaSoccerRobotPhoto from '@/assets/fira-soccer-robot.avif'
 import lunarRobotPhoto from '@/assets/lunar-robot.avif'
 import nwpuLogo from '@/assets/nwpu.png'
 import rescuePhoto from '@/assets/rescue.avif'
@@ -19,7 +20,6 @@ const languages = ['C++', 'Python']
 const framework = ['Pytorch', 'OpenCV', 'ROS']
 const research = ['Image Restoration', 'Robotics']
 const projectPlaceholders = [
-  { title: 'FIRA 5v5 Soccer Robot' },
   {
     title: 'Lingshu Intelligent Control',
     description: 'Person in Charge, NPU Peak Experience Program'
@@ -254,6 +254,25 @@ if (!images[imagePath])
                 class='text-primary hover:underline'
               >Intelligent Unmanned Base</a>
             </p>
+          </div>
+        </article>
+        <article class='not-prose grid overflow-hidden rounded-2xl border bg-muted sm:min-h-48 sm:grid-cols-[16rem_minmax(0,1fr)]'>
+          <Image
+            src={firaSoccerRobotPhoto}
+            alt='FIRA 5v5 Soccer Robot'
+            class='aspect-video w-full object-cover sm:aspect-auto sm:h-full'
+          />
+          <div class='flex flex-col justify-center gap-y-1.5 px-5 py-4'>
+            <h2 class='text-lg font-medium'>FIRA 5v5 Soccer Robot</h2>
+            <p class='text-muted-foreground'>
+              Mission: Coordinate five soccer robots in a match through vision calibration,
+              color-based recognition, serial communication, and low-level control.
+            </p>
+            <p class='text-muted-foreground'>
+              My work: Optimized the vision calibration pipeline and multi-robot coordination
+              algorithms.
+            </p>
+            <p class='text-muted-foreground'>Result: Second Prize.</p>
           </div>
         </article>
         {
