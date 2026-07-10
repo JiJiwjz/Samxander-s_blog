@@ -5,7 +5,7 @@ description: 'PyTorch 官方教程的中文翻译版本，添加了一些官网�
 tags:
   - PyTorch
   - Deep Learning
-heroImage: { src: './images/thumbnail.avif', color: '#D58388' }
+heroImage: { src: './images/pytorch_seo.avif', color: '#D58388' }
 ---
 
 # Tensors
