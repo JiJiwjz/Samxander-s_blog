@@ -4,6 +4,7 @@ import { Image } from 'astro:assets'
 import { Quote } from 'astro-pure/advanced'
 import { getBlogCollection, sortMDByDate } from 'astro-pure/server'
 import { Button, Card, Icon, Label } from 'astro-pure/user'
+import nwpuLogo from '@/assets/nwpu.png'
 import PageLayout from '@/layouts/BaseLayout.astro'
 import Section from '@/components/home/Section.astro'
 import SkillLayout from '@/components/home/SkillLayout.astro'
@@ -153,16 +154,13 @@ if (!images[imagePath])
           subheading='Undergraduate, Artificial Intelligence, the School of Computer Science'
           date='September 2024 - Now'
           href='https://www.nwpu.edu.cn/'
+          class='pr-28'
         >
-          {
-            /* <ul class='ms-4 list-disc text-muted-foreground'>
-          <li>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore debitis recusandae, ut
-            molestiae laboriosam pariatur!
-          </li>
-          <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, pariatur!</li>
-        </ul> */
-          }
+          <Image
+            src={nwpuLogo}
+            alt='Northwestern Polytechnical University logo'
+            class='absolute right-5 top-1/2 size-16 -translate-y-1/2 object-contain'
+          />
         </Card>
       </Section>
 
