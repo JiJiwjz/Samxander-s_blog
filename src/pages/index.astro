@@ -16,6 +16,14 @@ import config from '@/site-config'
 const languages = ['C++', 'Python']
 const framework = ['Pytorch', 'OpenCV', 'ROS']
 const research = ['Image Restoration', 'Robotics']
+const projectPlaceholders = [
+  { title: 'Lunar Exploration Robot' },
+  { title: 'FIRA 5v5 Soccer Robot' },
+  {
+    title: 'Lingshu Intelligent Control',
+    description: 'Person in Charge, NPU Peak Experience Program'
+  }
+]
 
 const MAX_POSTS = 10
 const allPosts = (await getBlogCollection()) as CollectionEntry<'blog'>[]
@@ -205,6 +213,17 @@ if (!images[imagePath])
             </p>
           </div>
         </article>
+        {
+          projectPlaceholders.map(({ title, description }) => (
+            <article class='not-prose grid overflow-hidden rounded-2xl border bg-muted sm:min-h-48 sm:grid-cols-[16rem_minmax(0,1fr)]'>
+              <div aria-hidden='true' class='aspect-video bg-card sm:aspect-auto sm:h-full'></div>
+              <div class='flex flex-col justify-center gap-y-1.5 px-5 py-4'>
+                <h2 class='text-lg font-medium'>{title}</h2>
+                {description && <p class='text-muted-foreground'>{description}</p>}
+              </div>
+            </article>
+          ))
+        }
       </Section>
 
       <Section title='Honors'>
