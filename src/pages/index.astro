@@ -5,6 +5,7 @@ import { Quote } from 'astro-pure/advanced'
 import { getBlogCollection, sortMDByDate } from 'astro-pure/server'
 import { Button, Card, Icon, Label } from 'astro-pure/user'
 import nwpuLogo from '@/assets/nwpu.png'
+import robocupPhoto from '@/assets/robocup.jpg'
 import PageLayout from '@/layouts/BaseLayout.astro'
 import Section from '@/components/home/Section.astro'
 import SkillLayout from '@/components/home/SkillLayout.astro'
@@ -165,11 +166,20 @@ if (!images[imagePath])
       </Section>
 
       <Section title='Certifications'>
-        <Card
-          heading='RoboCup China 2026'
-          subheading='National Champion, RoboCup Rescue Robot League - Dexterous Manipulation Challenge'
-          date='May 2026'
-        />
+        <article class='not-prose grid overflow-hidden rounded-2xl border bg-muted sm:grid-cols-[13rem_minmax(0,1fr)]'>
+          <Image
+            src={robocupPhoto}
+            alt='RoboCup rescue robot and championship trophies'
+            class='h-52 w-full object-cover sm:h-full sm:min-h-48'
+          />
+          <div class='flex flex-col justify-center gap-y-1.5 px-5 py-4'>
+            <h2 class='text-lg font-medium'>RoboCup China 2026</h2>
+            <p class='text-muted-foreground'>
+              National Champion, RoboCup Rescue Robot League - Dexterous Manipulation Challenge
+            </p>
+            <p class='text-muted-foreground'>May 2026</p>
+          </div>
+        </article>
       </Section>
 
       <Section title='Skills'>
