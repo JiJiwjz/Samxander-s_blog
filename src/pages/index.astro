@@ -4,7 +4,7 @@ import type { CollectionEntry } from 'astro:content'
 
 import { Quote } from 'astro-pure/advanced'
 import { getBlogCollection, sortMDByDate } from 'astro-pure/server'
-import { Button, Card, Icon, Label } from 'astro-pure/user'
+import { Button, Card } from 'astro-pure/user'
 import firaSoccerRobotPhoto from '@/assets/fira-soccer-robot.avif'
 import lingshuIntelligentControlPhoto from '@/assets/lingshu-intelligent-control.avif'
 import lunarRobotPhoto from '@/assets/lunar-robot.avif'
@@ -14,12 +14,18 @@ import robocupPhoto from '@/assets/robocup.avif'
 import zhongguancunAcademyLogo from '@/assets/zhongguancun-academy.png'
 import PageLayout from '@/layouts/BaseLayout.astro'
 import Section from '@/components/home/Section.astro'
-import SkillLayout from '@/components/home/SkillLayout.astro'
+import Sidebar from '@/components/home/Sidebar.astro'
 import config from '@/site-config'
 
 const languages = ['C++', 'Python']
 const framework = ['Pytorch', 'OpenCV', 'ROS']
 const research = ['Image Restoration', 'Robotics']
+
+const sidebarSkills = [
+  { title: 'Languages', skills: languages },
+  { title: 'Framework', skills: framework },
+  { title: 'Research', skills: research },
+]
 
 const MAX_POSTS = 10
 const allPosts = (await getBlogCollection()) as CollectionEntry<'blog'>[]
@@ -33,39 +39,23 @@ if (!images[imagePath])
   throw new Error(
     `"${imagePath}" does not exist in glob: "src/assets/*.{jpeg,jpg,png,gif,avif,webp}"`
   )
+const avatarModule = await images[imagePath]()
+const avatar = avatarModule.default
 ---
 
 <PageLayout meta={{ title: 'Home' }} highlightColor='#659EB9'>
-  <main class='flex w-full flex-col items-center'>
-    <section class='animate mb-10 flex flex-col items-center gap-y-7' id='content-header'>
-      <Image
-        src={images[imagePath]()}
-        alt={config.logo.alt || 'Profile'}
-        class='h-28 w-auto rounded-full border p-1'
-        loading='eager'
-        fetchpriority='high'
-      />
+  <main class='lg:grid lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-10'>
+    <Sidebar
+      avatar={avatar}
+      name={config.author}
+      subtitle='Undergraduate · AI @ NWPU'
+      location="Xi'an, ShaanXi"
+      githubUrl='https://github.com/JiJiwjz'
+      skills={sidebarSkills}
+    />
 
-      <div class='flex flex-col items-center gap-y-4'>
-        <h1 class='text-3xl font-medium'>{config.author}</h1>
-        <div class='flex flex-wrap justify-center gap-x-7 gap-y-3'>
-          <Label title="Xi'an, ShaanXi">
-            <Icon name='location' class='size-5' slot='icon' />
-          </Label>
-          <Label
-            title='Github Homepage'
-            as='a'
-            href='https://github.com/JiJiwjz'
-            target='_blank'
-          >
-            <Icon name='github' class='size-5' slot='icon' />
-          </Label>
-        </div>
-      </div>
-    </section>
-
-    <div id='content' class='animate flex flex-col gap-y-10 md:w-4/5 lg:w-5/6'>
-      <Section title='About'>
+    <div id='content' class='animate flex flex-col gap-y-10'>
+      <Section title='About' layout='top'>
         <p class='text-muted-foreground'>Undergraduate Student · Low-level Vision · Robotics</p>
         <p class='text-muted-foreground'>
           Hi, I'm Samxander, a sophomore in Artificial Intelligence at <strong>Northwestern Polytechnical University (NWPU)</strong>.
@@ -88,8 +78,8 @@ if (!images[imagePath])
       </Section>
       {
         allPostsByDate.length > 0 && (
-          <Section title='Posts'>
-            <div class='grid grid-cols-1 gap-4'>
+          <Section title='Posts' layout='top'>
+            <div class='grid grid-cols-1 gap-4 lg:grid-cols-2'>
               {allPostsByDate.map((p) => (
                 <a
                   href={`/blog/${p.id}`}
@@ -100,7 +90,7 @@ if (!images[imagePath])
                       <>
                         <Image
                           alt={p.data.heroImage.alt || p.data.title}
-                          class='absolute inset-y-0 right-0 z-0 hidden h-full w-[48%] object-cover opacity-75 transition duration-500 group-hover:scale-105 sm:block'
+                          class='absolute inset-y-0 right-0 z-0 hidden h-full w-[42%] object-cover opacity-75 transition duration-500 group-hover:scale-105 sm:block'
                           loading='lazy'
                           style='mask-image:linear-gradient(to right,transparent,black);-webkit-mask-image:linear-gradient(to right,transparent,black)'
                           {...p.data.heroImage}
@@ -108,7 +98,7 @@ if (!images[imagePath])
                       </>
                     )
                   }
-                  <div class='relative z-20 flex flex-col gap-y-2 sm:pr-[50%]'>
+                  <div class='relative z-20 flex flex-col gap-y-2 sm:pr-[44%]'>
                     <div class='flex items-center justify-between gap-x-2'>
                       <span class='line-clamp-1 font-medium group-hover:text-primary transition-colors'>
                         {p.data.title}
@@ -140,36 +130,7 @@ if (!images[imagePath])
         )
       }
 
-      {
-        /* <Section title='Experience'>
-      <Card
-        heading='Lorem Ipsum'
-        subheading='Sit amet consectetur'
-        date='Dec 2022 - Nov 2023'
-        imagePath='/src/assets/about-astro.png'
-        altText='Lorem, ipsum dolor sit'
-        imageClass='h-12 w-auto md:-start-16'
-      >
-        <ul class='ms-4 list-disc text-muted-foreground'>
-          <li>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore debitis recusandae, ut
-            molestiae laboriosam pariatur!
-
-            <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, pariatur!</li>
-          </li>
-        </ul>
-      </Card>
-      <Card
-        heading='Lorem Ipsum'
-        subheading='Sit amet consectetur'
-        date='Dec 2022 - Nov 2023'
-        imagePath='/src/assets/about-astro.png'
-        altText='Lorem, ipsum dolor sit'
-        imageClass='h-12 w-auto md:-start-16'
-      />
-    </Section> */
-      }
-      <Section title='Education'>
+      <Section title='Education' layout='top'>
         <Card
           as='a'
           heading='Northwestern Polytechnical University'
@@ -198,7 +159,7 @@ if (!images[imagePath])
         </Card>
       </Section>
 
-      <Section title='Projects'>
+      <Section title='Projects' layout='top'>
         <article class='not-prose grid overflow-hidden rounded-2xl border bg-muted sm:min-h-48 sm:grid-cols-[16rem_minmax(0,1fr)]'>
           <img
             src={rescuePhoto.src}
@@ -307,7 +268,7 @@ if (!images[imagePath])
         </article>
       </Section>
 
-      <Section title='Honors'>
+      <Section title='Honors' layout='top'>
         <article class='not-prose grid overflow-hidden rounded-2xl border bg-muted sm:min-h-48 sm:grid-cols-[16rem_minmax(0,1fr)]'>
           <img
             src={robocupPhoto.src}
@@ -331,12 +292,7 @@ if (!images[imagePath])
         </article>
       </Section>
 
-      <Section title='Skills'>
-        <SkillLayout title='Languages' skills={languages} />
-        <SkillLayout title='Framework' skills={framework} />
-        <SkillLayout title='Research' skills={research} />
-      </Section>
+      <Quote />
     </div>
-    <Quote class='mt-12' />
   </main>
 </PageLayout>

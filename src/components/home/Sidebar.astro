@@ -1,0 +1,62 @@
+---
+import { Image } from 'astro:assets'
+import type { ImageMetadata } from 'astro'
+import { Icon } from 'astro-pure/user'
+import SkillLayout from '@/components/home/SkillLayout.astro'
+
+interface SkillGroup {
+  title: string
+  skills: string[]
+}
+
+interface Props {
+  avatar: ImageMetadata
+  name: string
+  subtitle: string
+  location: string
+  githubUrl: string
+  skills: SkillGroup[]
+}
+
+const { avatar, name, subtitle, location, githubUrl, skills } = Astro.props
+---
+
+<aside
+  id='sidebar'
+  class='animate flex flex-col items-center gap-y-5 lg:sticky lg:top-24 lg:self-start lg:items-start'
+>
+  <Image
+    src={avatar}
+    alt={name}
+    class='h-24 w-auto rounded-full border p-1 lg:h-28'
+    loading='eager'
+    fetchpriority='high'
+  />
+
+  <div class='flex flex-col items-center gap-y-1 lg:items-start'>
+    <h1 class='text-2xl font-medium'>{name}</h1>
+    <p class='text-sm text-muted-foreground'>{subtitle}</p>
+  </div>
+
+  <div class='flex flex-wrap justify-center gap-x-4 gap-y-1 lg:flex-col lg:gap-y-1.5'>
+    <span class='inline-flex items-center gap-x-1.5 text-sm text-muted-foreground'>
+      <Icon name='location' class='size-4' />
+      {location}
+    </span>
+    <a
+      href={githubUrl}
+      target='_blank'
+      rel='noopener noreferrer'
+      class='inline-flex items-center gap-x-1.5 text-sm text-muted-foreground transition-colors hover:text-primary'
+    >
+      <Icon name='github' class='size-4' />
+      GitHub
+    </a>
+  </div>
+
+  <hr class='hidden w-full border-border lg:block' />
+
+  <div class='flex flex-col gap-y-3'>
+    {skills.map((group) => <SkillLayout title={group.title} skills={group.skills} variant='compact' />)}
+  </div>
+</aside>
