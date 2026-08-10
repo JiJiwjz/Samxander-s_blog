@@ -35,7 +35,15 @@ export default defineConfig({
 
   // [Adapter]
   // https://docs.astro.build/en/guides/deploy/
-  adapter: vercel({ imageService: true }),
+  adapter: vercel({
+    imageService: true,
+    // Cache Vercel-optimized images for a year instead of the default (no caching),
+    // which was forcing every image request to be reprocessed on each visit.
+    imagesConfig: {
+      sizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+      minimumCacheTTL: 31536000
+    }
+  }),
   output: 'server',
   // Local (standalone)
   // adapter: node({ mode: 'standalone' }),
