@@ -2,6 +2,8 @@
 :root {
   /* Primary */
   --primary: 200 29% 45%;
+  /* Bold text in article content */
+  --strong: 247 55% 38%;
   /* Foreground */
   --foreground: 240 10% 3.9%;
   --muted-foreground: 240 3.8% 28.1%;
@@ -19,6 +21,8 @@
 .dark {
   /* Primary */
   --primary: 195 95% 85%;
+  /* Bold text in article content */
+  --strong: 247 75% 74%;
   /* Foreground */
   --foreground: 0 0% 98%;
   --muted-foreground: 240 5% 74.9%;
@@ -45,6 +49,10 @@ html.dark {
 }
 
 /* Global */
+strong,
+b {
+  color: hsl(var(--strong) / 1);
+}
 a {
   transition: color 0.2s ease;
   &:hover {
