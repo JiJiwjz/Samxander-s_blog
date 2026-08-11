@@ -44,7 +44,7 @@ const avatar = avatarModule.default
 ---
 
 <PageLayout meta={{ title: 'Home' }} highlightColor='#7B6FE0'>
-  <main class='lg:grid lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-10'>
+  <main class='lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-14'>
     <Sidebar
       avatar={avatar}
       name={config.author}
@@ -54,7 +54,7 @@ const avatar = avatarModule.default
       skills={sidebarSkills}
     />
 
-    <div id='content' class='animate flex flex-col gap-y-10'>
+    <div id='content' class='animate flex flex-col gap-y-12'>
       <Section title='About' layout='top'>
         <p class='text-muted-foreground'>Undergraduate Student · Low-level Vision · Robotics</p>
         <p class='text-muted-foreground'>
@@ -142,7 +142,7 @@ const avatar = avatarModule.default
           <Image
             src={nwpuLogo}
             alt='Northwestern Polytechnical University logo'
-            class='absolute right-5 top-1/2 size-16 -translate-y-1/2 object-contain'
+            class='edu-logo-nwpu absolute right-5 top-1/2 size-16 -translate-y-1/2 object-contain'
           />
         </Card>
         <Card
@@ -154,13 +154,13 @@ const avatar = avatarModule.default
           <Image
             src={zhongguancunAcademyLogo}
             alt='Zhongguancun Academy logo'
-            class='absolute right-5 top-1/2 h-10 w-36 -translate-y-1/2 object-contain'
+            class='edu-logo-zgc absolute right-5 top-1/2 h-10 w-36 -translate-y-1/2 object-contain'
           />
         </Card>
       </Section>
 
       <Section title='Projects' layout='top'>
-        <article class='not-prose grid overflow-hidden rounded-2xl border bg-muted sm:min-h-48 sm:grid-cols-[16rem_minmax(0,1fr)]'>
+        <article class='not-prose flex gap-x-5 border-b border-border pb-6 last:border-b-0 last:pb-0 sm:min-h-[13.5rem] sm:gap-x-6'>
           <img
             src={rescuePhoto.src}
             alt='NPU Dancing Robot Base Rescue Team'
@@ -168,10 +168,10 @@ const avatar = avatarModule.default
             height={rescuePhoto.height}
             loading='lazy'
             decoding='async'
-            class='aspect-video w-full object-cover sm:aspect-auto sm:h-full'
+            class='aspect-square w-28 shrink-0 rounded-lg border border-border object-cover sm:aspect-auto sm:w-36'
           />
-          <div class='flex flex-col justify-center gap-y-1.5 px-5 py-4'>
-            <h2 class='text-lg font-medium'>Rescue Team - NPU Dancing Robot Base</h2>
+          <div class='flex min-w-0 flex-col justify-center gap-y-1.5'>
+            <h2 class='font-serif text-lg font-semibold'>Rescue Team - NPU Dancing Robot Base</h2>
             <p class='text-muted-foreground'>
               Mission: Locate and mark victims distributed across a simulated disaster environment.
             </p>
@@ -190,7 +190,7 @@ const avatar = avatarModule.default
             </p>
           </div>
         </article>
-        <article class='not-prose grid overflow-hidden rounded-2xl border bg-muted sm:min-h-48 sm:grid-cols-[16rem_minmax(0,1fr)]'>
+        <article class='not-prose flex gap-x-5 border-b border-border pb-6 last:border-b-0 last:pb-0 sm:min-h-[13.5rem] sm:gap-x-6'>
           <img
             src={lunarRobotPhoto.src}
             alt='Lunar Robot Team Leader - Intelligent Unmanned Base'
@@ -198,10 +198,15 @@ const avatar = avatarModule.default
             height={lunarRobotPhoto.height}
             loading='lazy'
             decoding='async'
-            class='aspect-video w-full object-cover sm:aspect-auto sm:h-full'
+            class='aspect-square w-28 shrink-0 rounded-lg border border-border object-cover sm:aspect-auto sm:w-36'
           />
-          <div class='flex flex-col justify-center gap-y-1.5 px-5 py-4'>
-            <h2 class='text-lg font-medium'>Lunar Robot Team Leader - Intelligent Unmanned Base</h2>
+          <div class='flex min-w-0 flex-col justify-center gap-y-1.5'>
+            <h2 class='flex flex-wrap items-center gap-x-2 font-serif text-lg font-semibold'>
+              Lunar Robot - Intelligent Unmanned Base
+              <span class='rounded-full bg-[hsl(var(--strong)/0.12)] px-2 py-0.5 font-sans text-xs font-medium text-[hsl(var(--strong))]'>
+                Team Leader
+              </span>
+            </h2>
             <p class='text-muted-foreground'>
               Mission: Autonomously navigate, identify minerals, and perform robotic-arm sampling
               tasks in a simulated lunar environment.
@@ -220,7 +225,7 @@ const avatar = avatarModule.default
             </p>
           </div>
         </article>
-        <article class='not-prose grid overflow-hidden rounded-2xl border bg-muted sm:min-h-48 sm:grid-cols-[16rem_minmax(0,1fr)]'>
+        <article class='not-prose flex gap-x-5 border-b border-border pb-6 last:border-b-0 last:pb-0 sm:min-h-[13.5rem] sm:gap-x-6'>
           <img
             src={firaSoccerRobotPhoto.src}
             alt='FIRA 5v5 Soccer Robot'
@@ -228,10 +233,15 @@ const avatar = avatarModule.default
             height={firaSoccerRobotPhoto.height}
             loading='lazy'
             decoding='async'
-            class='aspect-video w-full object-cover sm:aspect-auto sm:h-full'
+            class='aspect-square w-28 shrink-0 rounded-lg border border-border object-cover sm:aspect-auto sm:w-36'
           />
-          <div class='flex flex-col justify-center gap-y-1.5 px-5 py-4'>
-            <h2 class='text-lg font-medium'>FIRA 5v5 Soccer Robot</h2>
+          <div class='flex min-w-0 flex-col justify-center gap-y-1.5'>
+            <h2 class='flex flex-wrap items-center gap-x-2 font-serif text-lg font-semibold'>
+              FIRA 5v5 Soccer Robot
+              <span class='rounded-full bg-[hsl(var(--strong)/0.12)] px-2 py-0.5 font-sans text-xs font-medium text-[hsl(var(--strong))]'>
+                Team Leader
+              </span>
+            </h2>
             <p class='text-muted-foreground'>
               Mission: Coordinate five soccer robots in a match through vision calibration,
               color-based recognition, serial communication, and low-level control.
@@ -243,7 +253,7 @@ const avatar = avatarModule.default
             <p class='text-muted-foreground'>Result: Second Prize.</p>
           </div>
         </article>
-        <article class='not-prose grid overflow-hidden rounded-2xl border bg-muted sm:min-h-48 sm:grid-cols-[16rem_minmax(0,1fr)]'>
+        <article class='not-prose flex gap-x-5 border-b border-border pb-6 sm:min-h-[13.5rem] sm:gap-x-6'>
           <img
             src={lingshuIntelligentControlPhoto.src}
             alt='Lingshu Intelligent Control'
@@ -251,10 +261,10 @@ const avatar = avatarModule.default
             height={lingshuIntelligentControlPhoto.height}
             loading='lazy'
             decoding='async'
-            class='aspect-video w-full object-cover sm:aspect-auto sm:h-full'
+            class='aspect-square w-28 shrink-0 rounded-lg border border-border object-cover sm:aspect-auto sm:w-36'
           />
-          <div class='flex flex-col justify-center gap-y-1.5 px-5 py-4'>
-            <h2 class='text-lg font-medium'>Lingshu Intelligent Control</h2>
+          <div class='flex min-w-0 flex-col justify-center gap-y-1.5'>
+            <h2 class='font-serif text-lg font-semibold'>Lingshu Intelligent Control</h2>
             <p class='text-muted-foreground'>Project Lead, NPU Peak Experience Program</p>
             <p class='text-muted-foreground'>
               Under the supervision of <a
@@ -269,7 +279,7 @@ const avatar = avatarModule.default
       </Section>
 
       <Section title='Honors' layout='top'>
-        <article class='not-prose grid overflow-hidden rounded-2xl border bg-muted sm:min-h-48 sm:grid-cols-[16rem_minmax(0,1fr)]'>
+        <article class='not-prose flex gap-x-5 border-b border-border pb-6 last:border-b-0 last:pb-0 sm:min-h-[13.5rem] sm:gap-x-6'>
           <img
             src={robocupPhoto.src}
             alt='RoboCup rescue robot and championship trophies'
@@ -277,10 +287,10 @@ const avatar = avatarModule.default
             height={robocupPhoto.height}
             loading='lazy'
             decoding='async'
-            class='aspect-video w-full object-cover sm:aspect-auto sm:h-full'
+            class='aspect-square w-28 shrink-0 rounded-lg border border-border object-cover sm:aspect-auto sm:w-36'
           />
-          <div class='flex flex-col justify-center gap-y-1.5 px-5 py-4'>
-            <h2 class='text-lg font-medium'>RoboCup China 2026</h2>
+          <div class='flex min-w-0 flex-col justify-center gap-y-1.5'>
+            <h2 class='font-serif text-lg font-semibold'>RoboCup China 2026</h2>
             <p class='text-muted-foreground'>
               <strong>National Champion</strong>, RoboCup Rescue Robot League - Dexterous Manipulation Challenge
             </p>

@@ -48,6 +48,14 @@ html.dark {
   display: none !important;
 }
 
+/* Education logos: recolor for legibility on the dark card background */
+.dark .edu-logo-nwpu {
+  filter: grayscale(1) invert(1);
+}
+.dark .edu-logo-zgc {
+  filter: invert(1);
+}
+
 /* Global */
 strong,
 b {

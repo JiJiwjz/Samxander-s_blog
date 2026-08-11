@@ -134,6 +134,18 @@ export default defineConfig({
         styles: ['normal', 'italic'],
         weights: [400, 500],
         subsets: ['latin']
+      },
+      {
+        // Serif accent for the name and section titles — used sparingly for a
+        // more literary/academic feel, distinct from the sans body/UI text.
+        // Bunny Fonts (not Google Fonts) — the latter is unreachable from
+        // mainland China without a VPN, which would break local dev here.
+        provider: fontProviders.bunny(),
+        name: 'Source Serif 4',
+        cssVariable: '--font-serif',
+        styles: ['normal', 'italic'],
+        weights: [500, 600],
+        subsets: ['latin']
       }
     ]
   }
