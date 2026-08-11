@@ -48,6 +48,34 @@ html.dark {
   display: none !important;
 }
 
+/* Sidebar profile card: warm, paper-and-clay palette, deliberately distinct
+   from the rest of the page's cool tones — a single "identity card" accent. */
+#sidebar {
+  --card-bg: 42 38% 95%;
+  --card-fg: 30 14% 15%;
+  --card-muted: 30 9% 42%;
+  --card-border: 34 26% 86%;
+  --card-accent: 15 55% 52%;
+}
+.dark #sidebar {
+  --card-bg: 30 9% 13%;
+  --card-fg: 42 24% 93%;
+  --card-muted: 32 9% 68%;
+  --card-border: 30 11% 23%;
+  --card-accent: 16 65% 68%;
+}
+#sidebar button {
+  background-color: hsl(var(--card-accent) / 0.12);
+  border-color: hsl(var(--card-accent) / 0.28);
+  color: hsl(var(--card-accent));
+}
+#sidebar button:hover {
+  background-color: hsl(var(--card-accent) / 0.22);
+}
+#sidebar a:hover {
+  color: hsl(var(--card-accent));
+}
+
 /* Education logos: recolor for legibility on the dark card background */
 .dark .edu-logo-nwpu {
   filter: grayscale(1) invert(1);

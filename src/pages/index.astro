@@ -44,13 +44,24 @@ const avatar = avatarModule.default
 ---
 
 <PageLayout meta={{ title: 'Home' }} highlightColor='#7B6FE0'>
-  <main class='lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-14'>
+  <main class='lg:grid lg:grid-cols-[19rem_minmax(0,1fr)] lg:gap-12'>
     <Sidebar
       avatar={avatar}
       name={config.author}
       subtitle='Undergraduate · AI @ NWPU'
+      status='Open to research collaboration'
       location="Xi'an, ShaanXi"
-      githubUrl='https://github.com/JiJiwjz'
+      contacts={[
+        { label: 'GitHub', href: 'https://github.com/JiJiwjz', icon: 'github' },
+        { label: 'Email', href: 'mailto:weijiazhe123@mail.nwpu.edu.cn', icon: 'email' },
+        { label: '知乎', href: 'https://www.zhihu.com/people/shuai-xiao-ji-65', icon: 'zhihu' },
+        {
+          label: '小红书',
+          href: 'https://www.xiaohongshu.com/user/profile/61e4cf3900000000210232c4',
+          icon: 'coolapk'
+        }
+      ]}
+      cvUrl='/cv.pdf'
       skills={sidebarSkills}
     />
 
