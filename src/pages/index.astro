@@ -90,7 +90,7 @@ const avatar = avatarModule.default
       {
         allPostsByDate.length > 0 && (
           <Section title='Posts' layout='top'>
-            <div class='grid grid-cols-1 gap-4 lg:grid-cols-2'>
+            <div class='grid grid-cols-1 gap-4'>
               {allPostsByDate.map((p) => (
                 <a
                   href={`/blog/${p.id}`}
@@ -171,7 +171,7 @@ const avatar = avatarModule.default
       </Section>
 
       <Section title='Projects' layout='top'>
-        <article class='not-prose flex gap-x-5 border-b border-border pb-6 last:border-b-0 last:pb-0 sm:min-h-[13.5rem] sm:gap-x-6'>
+        <article class='not-prose flex gap-x-5 border-b border-border pb-6 last:border-b-0 last:pb-0 sm:min-h-[13.5rem] sm:items-center sm:gap-x-6'>
           <img
             src={rescuePhoto.src}
             alt='NPU Dancing Robot Base Rescue Team'
@@ -179,7 +179,7 @@ const avatar = avatarModule.default
             height={rescuePhoto.height}
             loading='lazy'
             decoding='async'
-            class='aspect-square w-28 shrink-0 rounded-lg border border-border object-cover sm:aspect-auto sm:w-36'
+            class='aspect-square w-32 shrink-0 rounded-lg border border-border object-cover sm:w-48'
           />
           <div class='flex min-w-0 flex-col justify-center gap-y-1.5'>
             <h2 class='font-serif text-lg font-semibold'>Rescue Team - NPU Dancing Robot Base</h2>
@@ -201,7 +201,7 @@ const avatar = avatarModule.default
             </p>
           </div>
         </article>
-        <article class='not-prose flex gap-x-5 border-b border-border pb-6 last:border-b-0 last:pb-0 sm:min-h-[13.5rem] sm:gap-x-6'>
+        <article class='not-prose flex gap-x-5 border-b border-border pb-6 last:border-b-0 last:pb-0 sm:min-h-[13.5rem] sm:items-center sm:gap-x-6'>
           <img
             src={lunarRobotPhoto.src}
             alt='Lunar Robot Team Leader - Intelligent Unmanned Base'
@@ -209,7 +209,7 @@ const avatar = avatarModule.default
             height={lunarRobotPhoto.height}
             loading='lazy'
             decoding='async'
-            class='aspect-square w-28 shrink-0 rounded-lg border border-border object-cover sm:aspect-auto sm:w-36'
+            class='aspect-square w-32 shrink-0 rounded-lg border border-border object-cover sm:w-48'
           />
           <div class='flex min-w-0 flex-col justify-center gap-y-1.5'>
             <h2 class='flex flex-wrap items-center gap-x-2 font-serif text-lg font-semibold'>
@@ -236,7 +236,7 @@ const avatar = avatarModule.default
             </p>
           </div>
         </article>
-        <article class='not-prose flex gap-x-5 border-b border-border pb-6 last:border-b-0 last:pb-0 sm:min-h-[13.5rem] sm:gap-x-6'>
+        <article class='not-prose flex gap-x-5 border-b border-border pb-6 last:border-b-0 last:pb-0 sm:min-h-[13.5rem] sm:items-center sm:gap-x-6'>
           <img
             src={firaSoccerRobotPhoto.src}
             alt='FIRA 5v5 Soccer Robot'
@@ -244,7 +244,7 @@ const avatar = avatarModule.default
             height={firaSoccerRobotPhoto.height}
             loading='lazy'
             decoding='async'
-            class='aspect-square w-28 shrink-0 rounded-lg border border-border object-cover sm:aspect-auto sm:w-36'
+            class='aspect-square w-32 shrink-0 rounded-lg border border-border object-cover sm:w-48'
           />
           <div class='flex min-w-0 flex-col justify-center gap-y-1.5'>
             <h2 class='flex flex-wrap items-center gap-x-2 font-serif text-lg font-semibold'>
@@ -264,7 +264,7 @@ const avatar = avatarModule.default
             <p class='text-muted-foreground'>Result: Second Prize.</p>
           </div>
         </article>
-        <article class='not-prose flex gap-x-5 border-b border-border pb-6 sm:min-h-[13.5rem] sm:gap-x-6'>
+        <article class='not-prose flex gap-x-5 border-b border-border pb-6 sm:min-h-[13.5rem] sm:items-center sm:gap-x-6'>
           <img
             src={lingshuIntelligentControlPhoto.src}
             alt='Lingshu Intelligent Control'
@@ -272,7 +272,7 @@ const avatar = avatarModule.default
             height={lingshuIntelligentControlPhoto.height}
             loading='lazy'
             decoding='async'
-            class='aspect-square w-28 shrink-0 rounded-lg border border-border object-cover sm:aspect-auto sm:w-36'
+            class='aspect-square w-32 shrink-0 rounded-lg border border-border object-cover sm:w-48'
           />
           <div class='flex min-w-0 flex-col justify-center gap-y-1.5'>
             <h2 class='font-serif text-lg font-semibold'>Lingshu Intelligent Control</h2>
@@ -290,7 +290,7 @@ const avatar = avatarModule.default
       </Section>
 
       <Section title='Honors' layout='top'>
-        <article class='not-prose flex gap-x-5 border-b border-border pb-6 last:border-b-0 last:pb-0 sm:min-h-[13.5rem] sm:gap-x-6'>
+        <article class='not-prose flex gap-x-5 border-b border-border pb-6 last:border-b-0 last:pb-0 sm:min-h-[13.5rem] sm:items-center sm:gap-x-6'>
           <img
             src={robocupPhoto.src}
             alt='RoboCup rescue robot and championship trophies'
@@ -298,7 +298,7 @@ const avatar = avatarModule.default
             height={robocupPhoto.height}
             loading='lazy'
             decoding='async'
-            class='aspect-square w-28 shrink-0 rounded-lg border border-border object-cover sm:aspect-auto sm:w-36'
+            class='aspect-square w-32 shrink-0 rounded-lg border border-border object-cover sm:w-48'
           />
           <div class='flex min-w-0 flex-col justify-center gap-y-1.5'>
             <h2 class='font-serif text-lg font-semibold'>RoboCup China 2026</h2>
