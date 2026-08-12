@@ -4,7 +4,7 @@ import type { CollectionEntry } from 'astro:content'
 
 import { Quote } from 'astro-pure/advanced'
 import { getBlogCollection, sortMDByDate } from 'astro-pure/server'
-import { Button, Card } from 'astro-pure/user'
+import { Button, Card, Icon } from 'astro-pure/user'
 import firaSoccerRobotPhoto from '@/assets/fira-soccer-robot.avif'
 import lingshuIntelligentControlPhoto from '@/assets/lingshu-intelligent-control.avif'
 import lunarRobotPhoto from '@/assets/lunar-robot.avif'
@@ -171,7 +171,7 @@ const avatar = avatarModule.default
       </Section>
 
       <Section title='Projects' layout='top'>
-        <article class='not-prose flex gap-x-5 border-b border-border pb-6 last:border-b-0 last:pb-0 sm:min-h-[13.5rem] sm:items-center sm:gap-x-6'>
+        <article class='not-prose flex gap-x-5 border-b border-border pb-6 last:border-b-0 last:pb-0 sm:min-h-[15.75rem] sm:items-center sm:gap-x-6'>
           <img
             src={rescuePhoto.src}
             alt='NPU Dancing Robot Base Rescue Team'
@@ -191,17 +191,19 @@ const avatar = avatarModule.default
               MoveIt-based semi-autonomous arm control and implemented fully autonomous grasping
               through pose estimation, visual servoing, and inverse kinematics.
             </p>
-            <p class='text-muted-foreground'>
-              Website: <a
-                href='https://dance-robot-base.github.io/'
-                target='_blank'
-                rel='noopener noreferrer'
-                class='text-primary hover:underline'
-              >Dancing Robot Base official website</a>
-            </p>
+            <a
+              href='https://dance-robot-base.github.io/'
+              target='_blank'
+              rel='noopener noreferrer'
+              title='Dancing Robot Base official website'
+              class='mt-1 inline-flex w-fit items-center gap-x-1.5 rounded-lg border border-border bg-background px-3 py-1.5 text-sm font-medium text-muted-foreground shadow-sm transition-colors hover:border-foreground/25 hover:text-foreground'
+            >
+              <Icon name='earth' class='size-4' />
+              Website
+            </a>
           </div>
         </article>
-        <article class='not-prose flex gap-x-5 border-b border-border pb-6 last:border-b-0 last:pb-0 sm:min-h-[13.5rem] sm:items-center sm:gap-x-6'>
+        <article class='not-prose flex gap-x-5 border-b border-border pb-6 last:border-b-0 last:pb-0 sm:min-h-[15.75rem] sm:items-center sm:gap-x-6'>
           <img
             src={lunarRobotPhoto.src}
             alt='Lunar Robot Team Leader - Intelligent Unmanned Base'
@@ -226,17 +228,19 @@ const avatar = avatarModule.default
               My responsibilities included building the vision pipeline, autonomous navigation, and
               robotic-arm grasping.
             </p>
-            <p class='text-muted-foreground'>
-              GitHub: <a
-                href='https://github.com/JiJiwjz/Intelligent-Unmanned-Base'
-                target='_blank'
-                rel='noopener noreferrer'
-                class='text-primary hover:underline'
-              >Intelligent Unmanned Base</a>
-            </p>
+            <a
+              href='https://github.com/JiJiwjz/Intelligent-Unmanned-Base'
+              target='_blank'
+              rel='noopener noreferrer'
+              title='Intelligent Unmanned Base'
+              class='mt-1 inline-flex w-fit items-center gap-x-1.5 rounded-lg border border-border bg-background px-3 py-1.5 text-sm font-medium text-muted-foreground shadow-sm transition-colors hover:border-foreground/25 hover:text-foreground'
+            >
+              <Icon name='github' class='size-4' />
+              GitHub
+            </a>
           </div>
         </article>
-        <article class='not-prose flex gap-x-5 border-b border-border pb-6 last:border-b-0 last:pb-0 sm:min-h-[13.5rem] sm:items-center sm:gap-x-6'>
+        <article class='not-prose flex gap-x-5 border-b border-border pb-6 last:border-b-0 last:pb-0 sm:min-h-[15.75rem] sm:items-center sm:gap-x-6'>
           <img
             src={firaSoccerRobotPhoto.src}
             alt='FIRA 5v5 Soccer Robot'
@@ -264,7 +268,7 @@ const avatar = avatarModule.default
             <p class='text-muted-foreground'>Result: Second Prize.</p>
           </div>
         </article>
-        <article class='not-prose flex gap-x-5 border-b border-border pb-6 sm:min-h-[13.5rem] sm:items-center sm:gap-x-6'>
+        <article class='not-prose flex gap-x-5 border-b border-border pb-6 sm:min-h-[15.75rem] sm:items-center sm:gap-x-6'>
           <img
             src={lingshuIntelligentControlPhoto.src}
             alt='Lingshu Intelligent Control'
@@ -290,7 +294,7 @@ const avatar = avatarModule.default
       </Section>
 
       <Section title='Honors' layout='top'>
-        <article class='not-prose flex gap-x-5 border-b border-border pb-6 last:border-b-0 last:pb-0 sm:min-h-[13.5rem] sm:items-center sm:gap-x-6'>
+        <article class='not-prose flex gap-x-5 border-b border-border pb-6 last:border-b-0 last:pb-0 sm:min-h-[15.75rem] sm:items-center sm:gap-x-6'>
           <img
             src={robocupPhoto.src}
             alt='RoboCup rescue robot and championship trophies'
