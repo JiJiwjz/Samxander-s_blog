@@ -21,12 +21,13 @@ interface Props {
   subtitle: string
   status?: string
   location: string
+  emails: string[]
   contacts: ContactLink[]
   cvUrl?: string
   skills: SkillGroup[]
 }
 
-const { avatar, name, subtitle, status, location, contacts, cvUrl, skills } = Astro.props
+const { avatar, name, subtitle, status, location, emails, contacts, cvUrl, skills } = Astro.props
 ---
 
 <aside
@@ -58,10 +59,23 @@ const { avatar, name, subtitle, status, location, contacts, cvUrl, skills } = As
     )
   }
 
-  <span class='inline-flex items-center gap-x-1.5 text-sm text-[hsl(var(--card-muted))]'>
-    <Icon name='location' class='size-4' />
-    {location}
-  </span>
+  <div class='flex flex-col items-center gap-y-1 lg:items-start'>
+    <span class='inline-flex items-center gap-x-1.5 text-sm text-[hsl(var(--card-muted))]'>
+      <Icon name='location' class='size-4' />
+      {location}
+    </span>
+    {
+      emails.map((email) => (
+        <a
+          href={`mailto:${email}`}
+          class='inline-flex items-center gap-x-1.5 text-sm text-[hsl(var(--card-muted))] transition-colors'
+        >
+          <Icon name='email' class='size-4' />
+          {email}
+        </a>
+      ))
+    }
+  </div>
 
   <div class='flex flex-wrap items-center gap-2'>
     {
