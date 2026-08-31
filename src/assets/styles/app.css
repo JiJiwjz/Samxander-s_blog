@@ -56,6 +56,7 @@ html.dark {
   --card-muted: 30 9% 42%;
   --card-border: 34 26% 86%;
   --card-accent: 15 55% 52%;
+  --card-link: 258 75% 58%;
 }
 .dark #sidebar {
   --card-bg: 30 9% 13%;
@@ -63,16 +64,21 @@ html.dark {
   --card-muted: 32 9% 68%;
   --card-border: 30 11% 23%;
   --card-accent: 16 65% 68%;
+  --card-link: 258 90% 76%;
 }
 #sidebar button {
-  background-color: hsl(var(--card-accent) / 0.12);
-  border-color: hsl(var(--card-accent) / 0.28);
-  color: hsl(var(--card-accent));
+  background-color: hsl(var(--card-fg) / 0.06);
+  border-color: hsl(var(--card-border));
+  color: hsl(var(--card-muted));
 }
 #sidebar button:hover {
-  background-color: hsl(var(--card-accent) / 0.22);
+  background-color: hsl(var(--card-fg) / 0.1);
+  color: hsl(var(--card-fg));
 }
 #sidebar a:hover {
+  color: hsl(var(--card-link));
+}
+#sidebar .sidebar-cta:hover {
   color: hsl(var(--card-accent));
 }
 

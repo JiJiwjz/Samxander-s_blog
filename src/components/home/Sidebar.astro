@@ -37,7 +37,7 @@ const { avatar, name, subtitle, status, location, emails, contacts, cvUrl, skill
   <Image
     src={avatar}
     alt={name}
-    class='h-24 w-auto rounded-full border-2 border-[hsl(var(--card-accent)/0.4)] p-1 lg:h-28'
+    class='h-24 w-auto rounded-full border-2 border-[hsl(var(--card-border))] p-1 lg:h-28'
     loading='eager'
     fetchpriority='high'
   />
@@ -87,7 +87,7 @@ const { avatar, name, subtitle, status, location, emails, contacts, cvUrl, skill
           rel='noopener noreferrer'
           aria-label={contact.label}
           title={contact.label}
-          class='inline-flex size-8 items-center justify-center rounded-full bg-[hsl(var(--card-accent)/0.1)] text-[hsl(var(--card-accent))] transition-colors hover:bg-[hsl(var(--card-accent)/0.22)]'
+          class='inline-flex size-8 items-center justify-center rounded-full bg-[hsl(var(--card-link)/0.1)] text-[hsl(var(--card-link))] transition-colors hover:bg-[hsl(var(--card-link)/0.18)]'
         >
           <Icon name={contact.icon} class='size-4' />
         </a>
@@ -101,7 +101,7 @@ const { avatar, name, subtitle, status, location, emails, contacts, cvUrl, skill
         href={cvUrl}
         target='_blank'
         rel='noopener noreferrer'
-        class='inline-flex w-full items-center justify-center gap-x-1.5 rounded-full border border-[hsl(var(--card-accent)/0.32)] bg-[hsl(var(--card-accent)/0.12)] px-3 py-1.5 text-sm font-medium text-[hsl(var(--card-accent))] transition-colors hover:bg-[hsl(var(--card-accent)/0.22)] lg:w-auto'
+        class='sidebar-cta inline-flex w-full items-center justify-center gap-x-1.5 rounded-full border border-[hsl(var(--card-accent)/0.32)] bg-[hsl(var(--card-accent)/0.12)] px-3 py-1.5 text-sm font-medium text-[hsl(var(--card-accent))] transition-colors hover:bg-[hsl(var(--card-accent)/0.22)] lg:w-auto'
       >
         <Icon name='document' class='size-4' />
         Download CV
