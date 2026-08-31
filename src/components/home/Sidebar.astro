@@ -51,8 +51,8 @@ const { avatar, name, subtitle, status, location, emails, contacts, cvUrl, skill
     status && (
       <p class='inline-flex items-start gap-x-2 text-sm text-[hsl(var(--card-muted))]'>
         <span class='relative mt-1.5 flex size-2 shrink-0 items-center justify-center'>
-          <span class='absolute size-2 animate-ping rounded-full bg-[hsl(var(--card-accent))] opacity-75' />
-          <span class='size-1.5 rounded-full bg-[hsl(var(--card-accent))]' />
+          <span class='absolute size-2 animate-ping rounded-full bg-[hsl(var(--card-link))] opacity-75' />
+          <span class='size-1.5 rounded-full bg-[hsl(var(--card-link))]' />
         </span>
         {status}
       </p>
@@ -101,7 +101,7 @@ const { avatar, name, subtitle, status, location, emails, contacts, cvUrl, skill
         href={cvUrl}
         target='_blank'
         rel='noopener noreferrer'
-        class='sidebar-cta inline-flex w-full items-center justify-center gap-x-1.5 rounded-full border border-[hsl(var(--card-accent)/0.32)] bg-[hsl(var(--card-accent)/0.12)] px-3 py-1.5 text-sm font-medium text-[hsl(var(--card-accent))] transition-colors hover:bg-[hsl(var(--card-accent)/0.22)] lg:w-auto'
+        class='inline-flex w-full items-center justify-center gap-x-1.5 rounded-full border border-[hsl(var(--card-link)/0.32)] bg-[hsl(var(--card-link)/0.12)] px-3 py-1.5 text-sm font-medium text-[hsl(var(--card-link))] transition-colors hover:bg-[hsl(var(--card-link)/0.22)] lg:w-auto'
       >
         <Icon name='document' class='size-4' />
         Download CV
