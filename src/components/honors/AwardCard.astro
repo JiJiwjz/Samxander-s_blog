@@ -1,0 +1,54 @@
+---
+import { Image } from 'astro:assets'
+import type { Honor, HonorCategory, HonorLevel } from '@/data/honors'
+
+interface Props {
+  honor: Honor
+}
+
+const { honor } = Astro.props
+
+const levelStyles: Record<HonorLevel, string> = {
+  International: 'border-violet-500/25 bg-violet-500/10 text-violet-700 dark:text-violet-300',
+  National: 'border-blue-500/25 bg-blue-500/10 text-blue-700 dark:text-blue-300',
+  Provincial: 'border-emerald-500/25 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300'
+}
+
+const categoryStyles: Record<HonorCategory, string> = {
+  Robotics: 'border-cyan-500/25 bg-cyan-500/10 text-cyan-700 dark:text-cyan-300',
+  'Mathematical Modeling': 'border-fuchsia-500/25 bg-fuchsia-500/10 text-fuchsia-700 dark:text-fuchsia-300',
+  'Marine Engineering': 'border-teal-500/25 bg-teal-500/10 text-teal-700 dark:text-teal-300',
+  'Aerospace Engineering': 'border-sky-500/25 bg-sky-500/10 text-sky-700 dark:text-sky-300',
+  Cybersecurity: 'border-rose-500/25 bg-rose-500/10 text-rose-700 dark:text-rose-300'
+}
+---
+
+<article class='not-prose flex gap-x-5 border-b border-border pb-6 last:border-b-0 last:pb-0 sm:min-h-[15.75rem] sm:items-center sm:gap-x-6'>
+  <Image
+    src={honor.image}
+    alt={honor.imageAlt}
+    widths={[256, 384]}
+    sizes='(min-width: 640px) 12rem, 8rem'
+    loading='lazy'
+    class='aspect-square w-32 shrink-0 rounded-lg border border-border bg-white object-contain sm:w-48'
+  />
+  <div class='flex min-w-0 flex-col justify-center gap-y-2'>
+    <h2 id={honor.slug} class='font-serif text-lg font-semibold'>{honor.title}</h2>
+    <div class='flex flex-col gap-y-1'>
+      {
+        honor.awards.map((award) => (
+          <p class='font-medium text-[hsl(var(--strong))]'>{award}</p>
+        ))
+      }
+    </div>
+    <div class='mt-1 flex flex-wrap gap-2'>
+      <span class:list={['rounded-md border px-2.5 py-1 text-xs font-medium', levelStyles[honor.level]]}>
+        {honor.level}
+      </span>
+      <span class:list={['rounded-md border px-2.5 py-1 text-xs font-medium', categoryStyles[honor.category]]}>
+        {honor.category}
+      </span>
+    </div>
+    {honor.date && <p class='text-sm text-muted-foreground'>{honor.date}</p>}
+  </div>
+</article>

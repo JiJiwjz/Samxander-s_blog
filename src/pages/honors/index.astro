@@ -1,30 +1,14 @@
 ---
-import robocupPhoto from '@/assets/robocup.avif'
+import AwardCard from '@/components/honors/AwardCard.astro'
 import PageLayout from '@/layouts/CommonPage.astro'
+import { honors } from '@/data/honors'
 
-const headings = [{ depth: 2, slug: 'robocup-china-2026', text: 'RoboCup China 2026' }]
+const headings = honors.map((honor) => ({ depth: 2, slug: honor.slug, text: honor.title }))
 ---
 
 <PageLayout title='Honors' {headings} comment>
-  <article class='not-prose flex gap-x-5 sm:min-h-[15.75rem] sm:items-center sm:gap-x-6'>
-    <img
-      src={robocupPhoto.src}
-      alt='RoboCup rescue robot and championship trophies'
-      width={robocupPhoto.width}
-      height={robocupPhoto.height}
-      loading='lazy'
-      decoding='async'
-      class='aspect-square w-32 shrink-0 rounded-lg border border-border object-cover sm:w-48'
-    />
-    <div class='flex min-w-0 flex-col justify-center gap-y-1.5'>
-      <h2 id='robocup-china-2026' class='font-serif text-lg font-semibold'>
-        RoboCup China 2026
-      </h2>
-      <p class='text-muted-foreground'>
-        <strong>National Champion</strong>, RoboCup Rescue Robot League - Dexterous Manipulation Challenge
-      </p>
-      <p class='text-muted-foreground'><strong>Runner-up</strong>, Rescue Group</p>
-      <p class='text-muted-foreground'>May 2026</p>
-    </div>
-  </article>
+  <p>A selection of awards from robotics, mathematical modeling, engineering, and cybersecurity competitions.</p>
+  <div class='not-prose mt-8 flex flex-col gap-y-6'>
+    {honors.map((honor) => <AwardCard {honor} />)}
+  </div>
 </PageLayout>

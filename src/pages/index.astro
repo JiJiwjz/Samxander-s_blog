@@ -10,11 +10,12 @@ import lingshuIntelligentControlPhoto from '@/assets/lingshu-intelligent-control
 import lunarRobotPhoto from '@/assets/lunar-robot.avif'
 import nwpuLogo from '@/assets/nwpu.png'
 import rescuePhoto from '@/assets/rescue.avif'
-import robocupPhoto from '@/assets/robocup.avif'
 import zhongguancunAcademyLogo from '@/assets/zhongguancun-academy.png'
 import PageLayout from '@/layouts/BaseLayout.astro'
+import AwardCard from '@/components/honors/AwardCard.astro'
 import Section from '@/components/home/Section.astro'
 import Sidebar from '@/components/home/Sidebar.astro'
+import { selectedHonors } from '@/data/honors'
 import config from '@/site-config'
 
 const languages = ['C++', 'Python']
@@ -293,28 +294,9 @@ const avatar = avatarModule.default
         </article>
       </Section>
 
-      <Section title='Honors' layout='top'>
-        <article class='not-prose flex gap-x-5 border-b border-border pb-6 last:border-b-0 last:pb-0 sm:min-h-[15.75rem] sm:items-center sm:gap-x-6'>
-          <img
-            src={robocupPhoto.src}
-            alt='RoboCup rescue robot and championship trophies'
-            width={robocupPhoto.width}
-            height={robocupPhoto.height}
-            loading='lazy'
-            decoding='async'
-            class='aspect-square w-32 shrink-0 rounded-lg border border-border object-cover sm:w-48'
-          />
-          <div class='flex min-w-0 flex-col justify-center gap-y-1.5'>
-            <h2 class='font-serif text-lg font-semibold'>RoboCup China 2026</h2>
-            <p class='text-muted-foreground'>
-              <strong>National Champion</strong>, RoboCup Rescue Robot League - Dexterous Manipulation Challenge
-            </p>
-            <p class='text-muted-foreground'>
-              <strong>Runner-up</strong>, Rescue Group
-            </p>
-            <p class='text-muted-foreground'>May 2026</p>
-          </div>
-        </article>
+      <Section title='Selected Awards and Honors' layout='top'>
+        {selectedHonors.map((honor) => <AwardCard {honor} />)}
+        <Button title='More Honors' class='w-fit self-end' href='/honors' variant='ahead' />
       </Section>
 
       <Quote />
