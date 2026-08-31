@@ -1,13 +1,11 @@
 ---
-import { Button, Collapse, Spoiler, Timeline } from 'astro-pure/user'
+import { Button } from 'astro-pure/user'
 import PageLayout from '@/layouts/CommonPage.astro'
 import Substats from '@/components/about/Substats.astro'
-import ToolSection from '@/components/about/ToolSection.astro'
 
 const headings = [
   { depth: 2, slug: 'hobbies', text: 'Hobbies' },
-  { depth: 2, slug: 'social-networks', text: 'Social Networks' },
-  { depth: 2, slug: 'about-blog', text: 'About Blog' }
+  { depth: 2, slug: 'social-networks', text: 'Social Networks' }
 ]
 ---
 
@@ -68,50 +66,4 @@ const headings = [
     ]}
   />
 
-  {/* about-blog */}
-  <h2 id='about-blog'>About Blog</h2>
-  <p>Website history:</p>
-  <Timeline
-    events={[
-      {
-        date: '2026-03-20',
-        content:
-          'Blog built with <a href="https://astro.build/" target="_blank">Astro</a> + <a href="https://github.com/cworld1/astro-theme-pure" target="_blank">Astro Theme Pure</a>, deployed on <a href="https://vercel.com/" target="_blank">Vercel</a>'
-      },
-      {
-        date: '2026-03-20',
-        content: 'Custom domain <a href="https://samxander.cn" target="_blank">samxander.cn</a> configured via Cloudflare'
-      },
-      {
-        date: '2026-03-21',
-        content: 'Comment system (<a href="https://waline.js.org" target="_blank">Waline</a>) and pageview counting enabled'
-      }
-    ]}
-  />
-  <p>
-    This site relies on the following excellent projects and services:
-  </p>
-  <ul>
-    <li>
-      Domain: <a href='https://www.aliyun.com/' target='_blank'>Aliyun</a> &amp;
-      <a href='https://www.cloudflare.com/' target='_blank'>Cloudflare</a> (DNS + CDN)
-    </li>
-    <li>
-      Framework &amp; Theme: <a href='https://astro.build/' target='_blank'>Astro</a> +{' '}
-      <a href='https://github.com/cworld1/astro-theme-pure' target='_blank'>Astro Theme Pure</a>
-    </li>
-    <li>
-      Hosting &amp; CI/CD: <a href='https://vercel.com/' target='_blank'>Vercel</a>
-    </li>
-    <li>
-      Comment &amp; Pageviews: <a href='https://waline.js.org' target='_blank'>Waline</a> +{' '}
-      <a href='https://supabase.com/' target='_blank'>Supabase</a>
-    </li>
-    <li>
-      Search: <a href='https://pagefind.app/' target='_blank'>Pagefind</a>
-    </li>
-    <li>
-      Social stats: <a href='https://github.com/spencerwooo/substats' target='_blank'>Substats</a>
-    </li>
-  </ul>
 </PageLayout>
