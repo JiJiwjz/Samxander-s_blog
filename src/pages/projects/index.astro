@@ -1,43 +1,14 @@
 ---
-import { Button, Collapse, Icon } from 'astro-pure/user'
 import PageLayout from '@/layouts/CommonPage.astro'
-import ProjectSection from '@/components/projects/ProjectSection.astro'
+import ProjectCard from '@/components/projects/ProjectCard.astro'
+import { projects } from '@/data/projects'
 
-const headings = [
-  { depth: 2, slug: 'research', text: 'Research' },
-  { depth: 2, slug: 'projects', text: 'Projects' }
-]
+const headings = projects.map((project) => ({ depth: 2, slug: project.slug, text: project.title }))
 ---
 
 <PageLayout title='Projects' {headings} view>
-  <p>
-    以下是我的部分科研项目和开源作品，持续更新中。
-  </p>
-
-  <h2 id='research'>Research</h2>
-  <ProjectSection
-    projects={[
-      {
-        name: '📄 待补充',
-        description: '论文 / 科研项目介绍',
-        links: [
-          { type: 'github', href: 'https://github.com/JiJiwjz' }
-        ]
-      }
-    ]}
-  />
-
-  <h2 id='projects'>Projects</h2>
-  <ProjectSection
-    projects={[
-      {
-        name: '📝 Samxander Blog',
-        description: 'Personal blog built with Astro + Pure theme',
-        links: [
-          { type: 'github', href: 'https://github.com/JiJiwjz/Samxander-s_blog' },
-          { type: 'site', href: 'https://samxander.cn' }
-        ]
-      }
-    ]}
-  />
+  <p>Selected robotics and intelligent systems projects. Click a project to view its details.</p>
+  <div class='not-prose mt-8 flex flex-col gap-y-6'>
+    {projects.map((project) => <ProjectCard {project} />)}
+  </div>
 </PageLayout>

@@ -1,0 +1,62 @@
+---
+import { Image } from 'astro:assets'
+import type { MarkdownHeading } from 'astro'
+import { Icon } from 'astro-pure/user'
+
+import PageLayout from '@/layouts/CommonPage.astro'
+import { projects, type Project } from '@/data/projects'
+
+export const prerender = true
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project }
+  }))
+}
+
+interface Props {
+  project: Project
+}
+
+const { project } = Astro.props
+const headings: MarkdownHeading[] = []
+---
+
+<PageLayout title={project.title} {headings} comment>
+  {
+    project.badge && (
+      <span class='not-prose mb-5 inline-flex rounded-full bg-[hsl(var(--strong)/0.12)] px-3 py-1 text-sm font-medium text-[hsl(var(--strong))]'>
+        {project.badge}
+      </span>
+    )
+  }
+
+  <Image
+    src={project.image}
+    alt={project.imageAlt}
+    widths={[640, 960, 1280]}
+    sizes='(min-width: 1024px) 48rem, 100vw'
+    class='not-prose m-0 mb-8 aspect-[16/9] w-full rounded-2xl border border-border object-cover'
+  />
+
+  {project.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+
+  {
+    project.links.length > 0 && (
+      <div class='not-prose mt-8 flex flex-wrap gap-3'>
+        {project.links.map((link) => (
+          <a
+            href={link.href}
+            target='_blank'
+            rel='noopener noreferrer'
+            class='inline-flex items-center gap-x-2 rounded-lg border border-border bg-muted px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:border-foreground/25 hover:text-foreground'
+          >
+            <Icon name={link.icon} class='size-4' />
+            {link.label}
+          </a>
+        ))}
+      </div>
+    )
+  }
+</PageLayout>
