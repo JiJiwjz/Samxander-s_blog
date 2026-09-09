@@ -33,7 +33,7 @@ export const projects: Project[] = [
     ],
     links: [
       {
-        label: 'Dancing Robot Base Website',
+        label: 'Website',
         href: 'https://dance-robot-base.github.io/',
         icon: 'earth'
       }

@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets'
+import { Icon } from 'astro-pure/user'
 import type { Project } from '@/data/projects'
 
 interface Props {
@@ -9,12 +10,12 @@ interface Props {
 const { project } = Astro.props
 ---
 
-<a
-  href={`/projects/${project.slug}`}
-  class='group block rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-primary'
-  aria-label={`View project: ${project.title}`}
->
-  <article class='not-prose relative flex gap-x-5 overflow-hidden rounded-2xl border border-border bg-muted/20 p-4 shadow-sm transition-[transform,border-color,box-shadow] duration-300 ease-out group-hover:-translate-y-0.5 group-hover:border-[hsl(var(--strong)/0.3)] group-hover:shadow-lg group-hover:shadow-[hsl(var(--strong)/0.08)] motion-reduce:transform-none motion-reduce:transition-none sm:min-h-[15.75rem] sm:items-center sm:gap-x-6 sm:p-5'>
+<article class='group not-prose relative flex gap-x-5 overflow-hidden rounded-2xl border border-border bg-muted/20 p-4 shadow-sm transition-[transform,border-color,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:border-[hsl(var(--strong)/0.3)] hover:shadow-lg hover:shadow-[hsl(var(--strong)/0.08)] motion-reduce:transform-none motion-reduce:transition-none sm:min-h-[15.75rem] sm:items-center sm:gap-x-6 sm:p-5'>
+    <a
+      href={`/projects/${project.slug}`}
+      class='absolute inset-0 z-20 rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-primary'
+      aria-label={`View project: ${project.title}`}
+    ></a>
     <span
       aria-hidden='true'
       class='pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100 motion-reduce:transition-none'
@@ -40,7 +41,21 @@ const { project } = Astro.props
         }
       </h2>
       {project.paragraphs.map((paragraph) => <p class='text-muted-foreground'>{paragraph}</p>)}
-      <span class='mt-1 text-sm font-medium text-primary'>View project →</span>
+      <div class='relative z-30 mt-2 flex flex-wrap items-center gap-2'>
+        {
+          project.links.map((link) => (
+            <a
+              href={link.href}
+              target='_blank'
+              rel='noopener noreferrer'
+              class='inline-flex items-center gap-x-1.5 rounded-lg border border-border bg-background/80 px-3 py-1.5 text-sm font-medium text-muted-foreground shadow-sm transition-colors hover:border-foreground/25 hover:text-foreground'
+            >
+              <Icon name={link.icon} class='size-4' />
+              {link.label}
+            </a>
+          ))
+        }
+        <span class='text-sm font-medium text-primary'>View project →</span>
+      </div>
     </div>
-  </article>
-</a>
+</article>
