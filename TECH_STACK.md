@@ -149,7 +149,7 @@ src/content/blog/
 
 | 技术            | 说明                                                          |
 | ------------- | ----------------------------------------------------------- |
-| Satoshi       | 主字体，来自 Fontshare，通过 Astro Experimental Fonts 加载             |
+| Space Grotesk | 主字体，来自 Bunny Fonts，通过 Astro Experimental Fonts 加载           |
 | 系统字体 fallback | `-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif` |
 
 ### 社交统计

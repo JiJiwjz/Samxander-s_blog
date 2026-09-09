@@ -128,9 +128,9 @@ export default defineConfig({
     // https://docs.astro.build/en/reference/experimental-flags/fonts/
     fonts: [
       {
-        provider: fontProviders.fontshare(),
-        name: 'Satoshi',
-        cssVariable: '--font-satoshi',
+        provider: fontProviders.bunny(),
+        name: 'Space Grotesk',
+        cssVariable: '--font-space-grotesk',
         styles: ['normal', 'italic'],
         weights: [400, 500],
         subsets: ['latin']
