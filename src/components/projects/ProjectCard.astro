@@ -29,7 +29,7 @@ const { project } = Astro.props
       loading='lazy'
       class='relative z-10 aspect-square w-32 shrink-0 rounded-lg border border-border object-cover transition-transform duration-300 ease-out group-hover:scale-[1.02] motion-reduce:transform-none motion-reduce:transition-none sm:w-48'
     />
-    <div class='relative z-10 flex min-w-0 flex-col justify-center gap-y-1.5'>
+    <div class='pointer-events-none relative z-30 flex min-w-0 flex-col justify-center gap-y-1.5'>
       <h2 id={project.slug} class='flex flex-wrap items-center gap-x-2 font-serif text-lg font-semibold transition-colors duration-300 group-hover:text-primary motion-reduce:transition-none'>
         {project.title}
         {
@@ -41,14 +41,14 @@ const { project } = Astro.props
         }
       </h2>
       {project.paragraphs.map((paragraph) => <p class='text-muted-foreground'>{paragraph}</p>)}
-      <div class='relative z-30 mt-2 flex flex-wrap items-center gap-2'>
+      <div class='relative mt-2 flex flex-wrap items-center gap-2'>
         {
           project.links.map((link) => (
             <a
               href={link.href}
               target='_blank'
               rel='noopener noreferrer'
-              class='inline-flex items-center gap-x-1.5 rounded-lg border border-border bg-background/80 px-3 py-1.5 text-sm font-medium text-muted-foreground shadow-sm transition-colors hover:border-foreground/25 hover:text-foreground'
+              class='pointer-events-auto inline-flex items-center gap-x-1.5 rounded-lg border border-border bg-background/80 px-3 py-1.5 text-sm font-medium text-muted-foreground shadow-sm transition-colors hover:border-foreground/25 hover:text-foreground'
             >
               <Icon name={link.icon} class='size-4' />
               {link.label}
