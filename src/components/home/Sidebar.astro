@@ -176,7 +176,7 @@ const { avatar, name, subtitle, status, location, emails, contacts, cvUrl, skill
           type='submit'
           class='inline-flex w-full items-center justify-center rounded-full border border-[hsl(var(--card-link)/0.36)] bg-[hsl(var(--card-link)/0.16)] px-4 py-2.5 text-sm font-medium text-[hsl(var(--card-link))] transition-colors hover:bg-[hsl(var(--card-link)/0.26)] disabled:cursor-not-allowed disabled:opacity-60'
         >
-          Verify and download
+          Verify and preview
         </button>
       </form>
     </dialog>
@@ -196,6 +196,7 @@ const { avatar, name, subtitle, status, location, emails, contacts, cvUrl, skill
   const defaultMessage = 'The answer is not case-sensitive.'
   const maxAttempts = 5
   const cooldownMs = 30_000
+  const previewAccessToken = 'cv-preview-9e4185db6b7343b5a206'
   let failedAttempts = 0
   let lockedUntil = 0
 
@@ -254,30 +255,43 @@ const { avatar, name, subtitle, status, location, emails, contacts, cvUrl, skill
       message.dataset.error = ''
       input.select()
       submitButton.disabled = false
-      submitButton.textContent = 'Verify and download'
+      submitButton.textContent = 'Verify and preview'
       return
     }
 
     failedAttempts = 0
-    message.textContent = 'Verified. Your download is starting…'
+    message.textContent = 'Verified. Opening the preview…'
     message.removeAttribute('data-error')
-    const cvUrl = dialog.dataset.cvUrl
-    if (cvUrl) {
-      const downloadLink = document.createElement('a')
-      downloadLink.href = cvUrl
-      downloadLink.download = 'Samxander-CV.pdf'
-      downloadLink.rel = 'noopener noreferrer'
-      document.body.appendChild(downloadLink)
-      downloadLink.click()
-      downloadLink.remove()
-    }
-    dialog.close()
-    submitButton.disabled = false
-    submitButton.textContent = 'Verify and download'
+    sessionStorage.setItem(
+      'cv-preview-access',
+      JSON.stringify({ token: previewAccessToken, expiresAt: Date.now() + 10 * 60 * 1000 })
+    )
+    const previewUrl = dialog.dataset.cvUrl
+    if (previewUrl) window.location.assign(previewUrl)
   })
 </script>
 
 <style>
+  #cv-access-dialog {
+    --card-bg: 0 0% 100%;
+    --card-fg: 240 10% 4%;
+    --card-muted: 240 4% 35%;
+    --card-border: 240 6% 82%;
+    --card-link: 258 75% 58%;
+    background-color: hsl(var(--card-bg));
+    box-shadow:
+      0 24px 70px rgb(15 14 21 / 0.45),
+      inset 0 1px 0 rgb(255 255 255 / 0.08);
+  }
+
+  :global(.dark) #cv-access-dialog {
+    --card-bg: 248 17% 10%;
+    --card-fg: 250 23% 92%;
+    --card-muted: 249 13% 69%;
+    --card-border: 250 17% 23%;
+    --card-link: 258 90% 76%;
+  }
+
   #cv-access-dialog[open] {
     animation: cv-dialog-in 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
   }

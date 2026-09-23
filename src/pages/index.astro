@@ -1,19 +1,19 @@
 ---
 import { Image } from 'astro:assets'
 import type { CollectionEntry } from 'astro:content'
+import { selectedHonors } from '@/data/honors'
+import { projects } from '@/data/projects'
 
 import { Quote } from 'astro-pure/advanced'
 import { getBlogCollection, sortMDByDate } from 'astro-pure/server'
 import { Button, Card } from 'astro-pure/user'
-import nwpuLogo from '@/assets/nwpu.png'
-import zhongguancunAcademyLogo from '@/assets/zhongguancun-academy.png'
 import PageLayout from '@/layouts/BaseLayout.astro'
-import AwardCard from '@/components/honors/AwardCard.astro'
 import Section from '@/components/home/Section.astro'
 import Sidebar from '@/components/home/Sidebar.astro'
+import AwardCard from '@/components/honors/AwardCard.astro'
 import ProjectCard from '@/components/projects/ProjectCard.astro'
-import { selectedHonors } from '@/data/honors'
-import { projects } from '@/data/projects'
+import nwpuLogo from '@/assets/nwpu.png'
+import zhongguancunAcademyLogo from '@/assets/zhongguancun-academy.png'
 import config from '@/site-config'
 
 const languages = ['C++', 'Python']
@@ -23,7 +23,7 @@ const research = ['Image Restoration', 'Robotics']
 const sidebarSkills = [
   { title: 'Languages', skills: languages },
   { title: 'Framework', skills: framework },
-  { title: 'Research', skills: research },
+  { title: 'Research', skills: research }
 ]
 
 const MAX_POSTS = 10
@@ -60,7 +60,7 @@ const avatar = avatarModule.default
           icon: 'coolapk'
         }
       ]}
-      cvUrl='/cv.pdf'
+      cvUrl='/cv-preview'
       skills={sidebarSkills}
     />
 
@@ -68,21 +68,27 @@ const avatar = avatarModule.default
       <Section title='About' layout='top'>
         <p class='text-muted-foreground'>Undergraduate Student · Low-level Vision · Robotics</p>
         <p class='text-muted-foreground'>
-          Hi, I'm Samxander, a junior in Artificial Intelligence at <strong>Northwestern Polytechnical University (NWPU)</strong>.
+          Hi, I'm Samxander, a junior in Artificial Intelligence at <strong
+            >Northwestern Polytechnical University (NWPU)</strong
+          >.
         </p>
         <p class='text-muted-foreground'>
-          My research focuses on <strong>Low-level Vision</strong>, currently on <strong>All-in-One Image Restoration</strong> —
-          recovering clean images under unknown and compositional degradations with a single unified
+          My research focuses on <strong>Low-level Vision</strong>, currently on <strong
+            >All-in-One Image Restoration</strong
+          > — recovering clean images under unknown and compositional degradations with a single unified
           model.
         </p>
         <p class='text-muted-foreground'>
-          I also work on <strong>Robotics</strong>. As a member of the Rescue Group at <strong>NWPU's Dance Robot Base</strong>, I am
-          responsible for the manipulator subsystem. Our team won <strong>1 championship and 3 runner-up cups</strong> at
+          I also work on <strong>Robotics</strong>. As a member of the Rescue Group at <strong
+            >NWPU's Dance Robot Base</strong
+          >, I am responsible for the manipulator subsystem. Our team won <strong
+            >1 championship and 3 runner-up cups</strong
+          > at
           <strong>RoboCup China 2026</strong>.
         </p>
         <p class='text-muted-foreground'>
-          This site collects my paper notes, technical write-ups, and occasional writing on unrelated
-          subjects.
+          This site collects my paper notes, technical write-ups, and occasional writing on
+          unrelated subjects.
         </p>
         <Button title='More about me' class='w-fit self-end' href='/about' variant='ahead' />
       </Section>
@@ -95,32 +101,31 @@ const avatar = avatarModule.default
                   href={`/blog/${p.id}`}
                   class='group relative isolate overflow-hidden rounded-2xl border bg-muted px-5 py-3 transition-all hover:border-foreground/25 hover:shadow-sm'
                 >
-                  {
-                    p.data.heroImage && (
-                      <>
-                        <Image
-                          alt={p.data.heroImage.alt || p.data.title}
-                          class='absolute inset-y-0 right-0 z-0 hidden h-full w-[42%] object-cover opacity-75 transition duration-500 group-hover:scale-105 sm:block'
-                          loading='lazy'
-                          style='mask-image:linear-gradient(to right,transparent,black);-webkit-mask-image:linear-gradient(to right,transparent,black)'
-                          {...p.data.heroImage}
-                        />
-                      </>
-                    )
-                  }
+                  {p.data.heroImage && (
+                    <>
+                      <Image
+                        alt={p.data.heroImage.alt || p.data.title}
+                        class='absolute inset-y-0 right-0 z-0 hidden h-full w-[42%] object-cover opacity-75 transition duration-500 group-hover:scale-105 sm:block'
+                        loading='lazy'
+                        style='mask-image:linear-gradient(to right,transparent,black);-webkit-mask-image:linear-gradient(to right,transparent,black)'
+                        {...p.data.heroImage}
+                      />
+                    </>
+                  )}
                   <div class='relative z-20 flex flex-col gap-y-2 sm:pr-[44%]'>
                     <div class='flex items-center justify-between gap-x-2'>
                       <span class='line-clamp-1 font-medium group-hover:text-primary transition-colors'>
                         {p.data.title}
                       </span>
                       <span class='shrink-0 text-xs text-muted-foreground'>
-                        {p.data.publishDate?.toLocaleDateString(config.locale.dateLocale, config.locale.dateOptions)}
+                        {p.data.publishDate?.toLocaleDateString(
+                          config.locale.dateLocale,
+                          config.locale.dateOptions
+                        )}
                       </span>
                     </div>
                     {p.data.description && (
-                      <p class='line-clamp-2 text-sm text-muted-foreground'>
-                        {p.data.description}
-                      </p>
+                      <p class='line-clamp-2 text-sm text-muted-foreground'>{p.data.description}</p>
                     )}
                     {p.data.tags.length > 0 && (
                       <div class='flex flex-wrap gap-1.5'>
