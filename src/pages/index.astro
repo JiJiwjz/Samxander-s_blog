@@ -89,6 +89,7 @@ const avatar = avatarModule.default
           <ShowcaseCard
             id='r3'
             heading='h3'
+            layout='landscape'
             title='R³: Region-Relation Reasoning for All-in-One Image Restoration'
             links={[
               { label: 'Paper', icon: 'document' },
@@ -98,15 +99,14 @@ const avatar = avatarModule.default
           >
             <a slot='cover' href={r3Method.src} target='_blank' rel='noopener noreferrer'
               aria-label='View full-size R³ method diagram'
-              class='flex h-full w-full cursor-zoom-in items-center bg-white focus-visible:outline-offset-[-3px]'>
+              class='block cursor-zoom-in focus-visible:outline-offset-[-3px]'>
               <Image src={r3Method} alt='R³ perception and restoration stages connected by a region relation graph'
-                widths={[256, 384, 576]} sizes='(min-width: 640px) 12rem, 8rem'
-                loading='lazy' class='h-auto w-full' />
+                widths={[256, 384, 576, 960]} sizes='(min-width: 640px) min(36vw, 16rem), calc(100vw - 4rem)'
+                loading='lazy' class='block h-auto w-full' />
             </a>
             <p class='text-sm leading-relaxed text-muted-foreground'>
-              Jiazhe Wei<sup>1</sup>, Kangbiao Shi<sup>1</sup>, Pengwei Zhang<sup>2</sup>,
-              Wei Dong<sup>3</sup>, Haofei Qian<sup>1</sup>, Peng Wu<sup>1</sup>,
-              Axi Niu<sup>1</sup>, Qingsen Yan<sup>1†</sup>
+              <strong class='whitespace-nowrap font-bold text-foreground underline underline-offset-2'>Jiazhe Wei</strong>,
+              Kangbiao Shi, Pengwei Zhang, Wei Dong, Haofei Qian, Peng Wu, Axi Niu, Qingsen Yan<sup>†</sup>
             </p>
           </ShowcaseCard>
         </Section>
