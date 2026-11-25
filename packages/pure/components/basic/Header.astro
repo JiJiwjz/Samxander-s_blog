@@ -26,7 +26,6 @@ import { Icon } from '../user'
             <a
               href={item.link}
               class='w-full flex-none grow py-2 text-right font-medium transition-none hover:text-primary sm:w-fit sm:px-3'
-              aria-label='Nav menu item'
             >
               {item.title}
             </a>
@@ -100,6 +99,11 @@ import { Icon } from '../user'
       // Menu
       this.querySelector('#toggleMenu')?.addEventListener('click', () => {
         this.classList.toggle('expanded')
+      })
+      this.querySelector('#headerExpandContent')?.addEventListener('click', (event) => {
+        if (event.target instanceof Element && event.target.closest('a')) {
+          this.classList.remove('expanded')
+        }
       })
     }
   }
