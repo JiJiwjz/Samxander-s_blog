@@ -1,11 +1,9 @@
 ---
 import { Image } from 'astro:assets'
-import type { CollectionEntry } from 'astro:content'
 import { selectedHonors } from '@/data/honors'
 import { projects } from '@/data/projects'
 
 import { Quote } from 'astro-pure/advanced'
-import { getBlogCollection, sortMDByDate } from 'astro-pure/server'
 import { Button, Card } from 'astro-pure/user'
 import PageLayout from '@/layouts/BaseLayout.astro'
 import Section from '@/components/home/Section.astro'
@@ -25,10 +23,6 @@ const sidebarSkills = [
   { title: 'Framework', skills: framework },
   { title: 'Research', skills: research }
 ]
-
-const MAX_POSTS = 10
-const allPosts = (await getBlogCollection()) as CollectionEntry<'blog'>[]
-const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS) as CollectionEntry<'blog'>[]
 
 const imagePath = config.logo.src
 const images = import.meta.glob<{ default: ImageMetadata }>(
@@ -86,64 +80,26 @@ const avatar = avatarModule.default
           > at
           <strong>RoboCup China 2026</strong>.
         </p>
-        <p class='text-muted-foreground'>
-          This site collects my paper notes, technical write-ups, and occasional writing on
-          unrelated subjects.
-        </p>
         <Button title='More about me' class='w-fit self-end' href='/about' variant='ahead' />
       </Section>
-      {
-        allPostsByDate.length > 0 && (
-          <Section title='Posts' layout='top'>
-            <div class='grid grid-cols-1 gap-4'>
-              {allPostsByDate.map((p) => (
-                <a
-                  href={`/blog/${p.id}`}
-                  class='home-post group relative isolate overflow-hidden rounded-2xl border bg-muted px-5 py-3 transition-all hover:border-foreground/25 hover:shadow-sm'
-                >
-                  {p.data.heroImage && (
-                    <>
-                      <Image
-                        alt={p.data.heroImage.alt || p.data.title}
-                        class='absolute inset-y-0 right-0 z-0 hidden h-full w-[42%] object-cover opacity-75 transition duration-500 group-hover:scale-105 sm:block'
-                        loading='lazy'
-                        style='mask-image:linear-gradient(to right,transparent,black);-webkit-mask-image:linear-gradient(to right,transparent,black)'
-                        {...p.data.heroImage}
-                      />
-                    </>
-                  )}
-                  <div class='relative z-20 flex flex-col gap-y-2 sm:pr-[44%]'>
-                    <div class='flex items-center justify-between gap-x-2'>
-                      <span class='line-clamp-1 font-medium group-hover:text-primary transition-colors'>
-                        {p.data.title}
-                      </span>
-                      <span class='shrink-0 text-xs text-muted-foreground'>
-                        {p.data.publishDate?.toLocaleDateString(
-                          config.locale.dateLocale,
-                          config.locale.dateOptions
-                        )}
-                      </span>
-                    </div>
-                    {p.data.description && (
-                      <p class='line-clamp-2 text-sm text-muted-foreground'>{p.data.description}</p>
-                    )}
-                    {p.data.tags.length > 0 && (
-                      <div class='flex flex-wrap gap-1.5'>
-                        {p.data.tags.slice(0, 3).map((tag) => (
-                          <span class='rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground'>
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </a>
-              ))}
-            </div>
-            <Button title='More posts' class='w-fit self-end' href='/blog' variant='ahead' />
-          </Section>
-        )
-      }
+      <section id='papers' aria-labelledby='papers-heading' class='scroll-mt-24 flex flex-col gap-y-3'>
+        <h2 id='papers-heading' class='font-serif text-xl font-semibold'>Papers</h2>
+        <article>
+          <h3 class='text-lg font-medium'>
+            R³: Region-Relation Reasoning for All-in-One Image Restoration
+          </h3>
+          <div class='mt-2 flex flex-wrap gap-2'>
+            {['Paper', 'Website', 'Code'].map((label) => (
+              <span class='paper-resource'>
+                <span role='link' aria-disabled='true' aria-describedby={`r3-${label}`} tabindex='0'>
+                  {label}
+                </span>
+                <span id={`r3-${label}`} role='tooltip'>comming soon</span>
+              </span>
+            ))}
+          </div>
+        </article>
+      </section>
 
       <Section title='Education' layout='top'>
         <Card
@@ -188,6 +144,42 @@ const avatar = avatarModule.default
   </main>
 </PageLayout>
 
+<style>
+  .paper-resource {
+    position: relative;
+    display: inline-flex;
+  }
+  .paper-resource [role='link'] {
+    padding: 0.2rem 0.65rem;
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.4rem;
+    color: hsl(0 0% 43%);
+    font-size: 0.875rem;
+    cursor: not-allowed;
+  }
+  :global(.dark) .paper-resource [role='link'] {
+    color: hsl(0 0% 72%);
+  }
+  .paper-resource [role='tooltip'] {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+    padding: 0.25rem 0.55rem;
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.35rem;
+    color: hsl(var(--foreground));
+    background: hsl(var(--background));
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+  .paper-resource:hover [role='tooltip'],
+  .paper-resource:focus-within [role='tooltip'] {
+    display: block;
+  }
+</style>
+
 <style is:global>
   html.dark body[data-home] {
     --foreground: 260 54.5% 95.7%;
@@ -210,9 +202,5 @@ const avatar = avatarModule.default
     --card-muted: 253.3 18.4% 80.8%;
     --card-border: 253.6 14.3% 30.2%;
     --card-link: var(--strong);
-  }
-
-  html.dark body[data-home] .home-post {
-    background-color: #24293b;
   }
 </style>
