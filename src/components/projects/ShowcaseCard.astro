@@ -1,0 +1,70 @@
+---
+import { Image } from 'astro:assets'
+import type { ImageMetadata } from 'astro'
+import { Icon } from 'astro-pure/user'
+
+interface Props {
+  id: string
+  title: string
+  heading?: 'h2' | 'h3'
+  badge?: string
+  image?: { src: ImageMetadata; alt: string }
+  detail?: { href: string; label: string }
+  links: { label: string; icon: 'document' | 'earth' | 'github'; href?: string }[]
+}
+
+const { id, title, heading: Heading = 'h2', badge, image, detail, links } = Astro.props
+const thumbnailClass =
+  'relative z-10 aspect-square w-32 shrink-0 rounded-lg border border-border object-cover transition-transform duration-300 ease-out group-hover:scale-[1.02] motion-reduce:transform-none motion-reduce:transition-none sm:w-48'
+const resourceClass =
+  'pointer-events-auto inline-flex items-center gap-x-1.5 rounded-lg border border-border bg-background/80 px-3 py-1.5 text-sm font-medium shadow-sm'
+---
+
+<article class='group not-prose relative flex gap-x-5 overflow-hidden rounded-2xl border border-border bg-muted/20 p-4 shadow-sm transition-[transform,border-color,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:border-[hsl(var(--strong)/0.3)] hover:shadow-lg hover:shadow-[hsl(var(--strong)/0.08)] motion-reduce:transform-none motion-reduce:transition-none sm:min-h-[15.75rem] sm:items-center sm:gap-x-6 sm:p-5'>
+  {detail && (
+    <a href={detail.href} aria-label={`${detail.label}: ${title}`}
+      class='absolute inset-0 z-20 rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-primary' />
+  )}
+  <span aria-hidden='true'
+    class='pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100 motion-reduce:transition-none'
+    style='background:radial-gradient(circle at 15% 20%,hsl(var(--strong)/0.14),transparent 52%),linear-gradient(135deg,hsl(var(--primary)/0.08),transparent 72%)' />
+  {image ? (
+    <Image src={image.src} alt={image.alt} widths={[256, 384]}
+      sizes='(min-width: 640px) 12rem, 8rem' loading='lazy' class={thumbnailClass} />
+  ) : (
+    <div aria-hidden='true' class:list={[thumbnailClass, 'overflow-hidden']}>
+      <slot name='cover' />
+    </div>
+  )}
+  <div class:list={['relative z-30 flex min-w-0 flex-col justify-center gap-y-1.5', detail && 'pointer-events-none']}>
+    <Heading id={id} class='flex flex-wrap items-center gap-x-2 font-serif text-lg font-semibold transition-colors duration-300 group-hover:text-primary motion-reduce:transition-none'>
+      {title}
+      {badge && <span class='rounded-full bg-[hsl(var(--strong)/0.12)] px-2 py-0.5 font-sans text-xs font-medium text-[hsl(var(--strong))]'>{badge}</span>}
+    </Heading>
+    <slot />
+    <div class='relative mt-2 flex flex-wrap items-center gap-2'>
+      {links.map((link) => link.href ? (
+        <a href={link.href} target='_blank' rel='noopener noreferrer'
+          class:list={[resourceClass, 'text-muted-foreground transition-colors hover:border-foreground/25 hover:text-foreground']}>
+          <Icon name={link.icon} class='size-4' />{link.label}
+        </a>
+      ) : (
+        <span class='resource-pending relative inline-flex'>
+          <span role='link' aria-disabled='true' aria-describedby={`${id}-${link.icon}-tip`} tabindex='0'
+            class:list={[resourceClass, 'cursor-not-allowed text-neutral-600 dark:text-neutral-400']}>
+            <Icon name={link.icon} class='size-4' />{link.label}
+          </span>
+          <span id={`${id}-${link.icon}-tip`} role='tooltip'
+            class='absolute bottom-full left-0 z-10 whitespace-nowrap rounded-md border border-border bg-background px-2 py-1 text-xs text-foreground shadow-sm'>comming soon</span>
+        </span>
+      ))}
+      {detail && <span class='text-sm font-medium text-primary'>{detail.label} →</span>}
+    </div>
+  </div>
+</article>
+
+<style>
+  .resource-pending [role='tooltip'] { display: none; }
+  .resource-pending:hover [role='tooltip'],
+  .resource-pending:focus-within [role='tooltip'] { display: block; }
+</style>
