@@ -7,20 +7,26 @@ interface Props {
   id: string
   title: string
   heading?: 'h2' | 'h3'
+  layout?: 'square' | 'landscape'
   badge?: string
   image?: { src: ImageMetadata; alt: string }
   detail?: { href: string; label: string }
   links: { label: string; icon: 'document' | 'earth' | 'github'; href?: string }[]
 }
 
-const { id, title, heading: Heading = 'h2', badge, image, detail, links } = Astro.props
-const thumbnailClass =
-  'relative z-10 aspect-square w-32 shrink-0 rounded-lg border border-border object-cover transition-transform duration-300 ease-out group-hover:scale-[1.02] motion-reduce:transform-none motion-reduce:transition-none sm:w-48'
+const { id, title, heading: Heading = 'h2', layout = 'square', badge, image, detail, links } = Astro.props
+const thumbnailClass = [
+  'relative z-10 rounded-lg border border-border transition-transform duration-300 ease-out group-hover:scale-[1.02] motion-reduce:transform-none motion-reduce:transition-none',
+  layout === 'landscape' ? 'block h-auto w-full' : 'aspect-square w-32 shrink-0 object-cover sm:w-48'
+].join(' ')
 const resourceClass =
   'pointer-events-auto inline-flex items-center gap-x-1.5 rounded-lg border border-border bg-background/80 px-3 py-1.5 text-sm font-medium shadow-sm'
 ---
 
-<article class='group not-prose relative flex gap-x-5 overflow-hidden rounded-2xl border border-border bg-muted/20 p-4 shadow-sm transition-[transform,border-color,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:border-[hsl(var(--strong)/0.3)] hover:shadow-lg hover:shadow-[hsl(var(--strong)/0.08)] motion-reduce:transform-none motion-reduce:transition-none sm:min-h-[15.75rem] sm:items-center sm:gap-x-6 sm:p-5'>
+<article class:list={[
+  'group not-prose relative overflow-hidden rounded-2xl border border-border bg-muted/20 p-4 shadow-sm transition-[transform,border-color,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:border-[hsl(var(--strong)/0.3)] hover:shadow-lg hover:shadow-[hsl(var(--strong)/0.08)] motion-reduce:transform-none motion-reduce:transition-none sm:p-5',
+  layout === 'landscape' ? 'landscape-card' : 'flex gap-x-5 sm:min-h-[15.75rem] sm:items-center sm:gap-x-6'
+]}>
   {detail && (
     <a href={detail.href} aria-label={`${detail.label}: ${title}`}
       class='absolute inset-0 z-20 rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-primary' />
@@ -64,6 +70,18 @@ const resourceClass =
 </article>
 
 <style>
+  .landscape-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: center;
+    gap: 1rem;
+  }
+  @media (min-width: 640px) {
+    .landscape-card {
+      grid-template-columns: min(36%, 16rem) minmax(0, 1fr);
+      gap: 1.5rem;
+    }
+  }
   .resource-pending [role='tooltip'] { display: none; }
   .resource-pending:hover [role='tooltip'],
   .resource-pending:focus-within [role='tooltip'] { display: block; }
