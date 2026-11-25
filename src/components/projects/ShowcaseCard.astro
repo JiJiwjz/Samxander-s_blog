@@ -32,7 +32,7 @@ const resourceClass =
     <Image src={image.src} alt={image.alt} widths={[256, 384]}
       sizes='(min-width: 640px) 12rem, 8rem' loading='lazy' class={thumbnailClass} />
   ) : (
-    <div aria-hidden='true' class:list={[thumbnailClass, 'overflow-hidden']}>
+    <div class:list={[thumbnailClass, 'overflow-hidden']}>
       <slot name='cover' />
     </div>
   )}
