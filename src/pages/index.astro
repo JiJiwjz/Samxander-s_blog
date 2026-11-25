@@ -10,6 +10,7 @@ import Section from '@/components/home/Section.astro'
 import Sidebar from '@/components/home/Sidebar.astro'
 import AwardCard from '@/components/honors/AwardCard.astro'
 import ProjectCard from '@/components/projects/ProjectCard.astro'
+import ShowcaseCard from '@/components/projects/ShowcaseCard.astro'
 import nwpuLogo from '@/assets/nwpu.png'
 import zhongguancunAcademyLogo from '@/assets/zhongguancun-academy.png'
 import config from '@/site-config'
@@ -82,24 +83,22 @@ const avatar = avatarModule.default
         </p>
         <Button title='More about me' class='w-fit self-end' href='/about' variant='ahead' />
       </Section>
-      <section id='papers' aria-labelledby='papers-heading' class='scroll-mt-24 flex flex-col gap-y-3'>
-        <h2 id='papers-heading' class='font-serif text-xl font-semibold'>Papers</h2>
-        <article>
-          <h3 class='text-lg font-medium'>
-            R³: Region-Relation Reasoning for All-in-One Image Restoration
-          </h3>
-          <div class='mt-2 flex flex-wrap gap-2'>
-            {['Paper', 'Website', 'Code'].map((label) => (
-              <span class='paper-resource'>
-                <span role='link' aria-disabled='true' aria-describedby={`r3-${label}`} tabindex='0'>
-                  {label}
-                </span>
-                <span id={`r3-${label}`} role='tooltip'>comming soon</span>
-              </span>
-            ))}
-          </div>
-        </article>
-      </section>
+      <div id='papers' class='scroll-mt-24'>
+        <Section title='Papers' layout='top'>
+          <ShowcaseCard
+            id='r3'
+            heading='h3'
+            title='R³: Region-Relation Reasoning for All-in-One Image Restoration'
+            links={[
+              { label: 'Paper', icon: 'document' },
+              { label: 'Website', icon: 'earth' },
+              { label: 'Code', icon: 'github' }
+            ]}
+          >
+            <span slot='cover' class='r3-cover'>R³</span>
+          </ShowcaseCard>
+        </Section>
+      </div>
 
       <Section title='Education' layout='top'>
         <Card
@@ -145,38 +144,14 @@ const avatar = avatarModule.default
 </PageLayout>
 
 <style>
-  .paper-resource {
-    position: relative;
-    display: inline-flex;
-  }
-  .paper-resource [role='link'] {
-    padding: 0.2rem 0.65rem;
-    border: 1px solid hsl(var(--border));
-    border-radius: 0.4rem;
-    color: hsl(0 0% 43%);
-    font-size: 0.875rem;
-    cursor: not-allowed;
-  }
-  :global(.dark) .paper-resource [role='link'] {
-    color: hsl(0 0% 72%);
-  }
-  .paper-resource [role='tooltip'] {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 1;
-    padding: 0.25rem 0.55rem;
-    border: 1px solid hsl(var(--border));
-    border-radius: 0.35rem;
-    color: hsl(var(--foreground));
-    background: hsl(var(--background));
-    font-size: 0.75rem;
-    white-space: nowrap;
-  }
-  .paper-resource:hover [role='tooltip'],
-  .paper-resource:focus-within [role='tooltip'] {
-    display: block;
+  .r3-cover {
+    display: grid;
+    height: 100%;
+    place-items: center;
+    background: radial-gradient(ellipse at 5% 0%, #524367, transparent 85%),
+      linear-gradient(145deg, #31344f, #172337);
+    color: #f2eefa;
+    font: 500 clamp(3.5rem, 7vw, 5rem) / 1 Georgia, serif;
   }
 </style>
 
