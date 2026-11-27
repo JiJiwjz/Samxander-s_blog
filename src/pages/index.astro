@@ -13,6 +13,7 @@ import ProjectCard from '@/components/projects/ProjectCard.astro'
 import ShowcaseCard from '@/components/projects/ShowcaseCard.astro'
 import nwpuLogo from '@/assets/nwpu.png'
 import r3Video from '@/assets/r3-nh-haze-24.mp4?url'
+import r3Webm from '@/assets/r3-nh-haze-24.webm?url'
 import r3Poster from '@/assets/r3-nh-haze-24-poster.jpg'
 import zhongguancunAcademyLogo from '@/assets/zhongguancun-academy.png'
 import config from '@/site-config'
@@ -108,7 +109,6 @@ const avatar = avatarModule.default
             >
               <video
                 id='r3-demo'
-                src={r3Video}
                 poster={r3Poster.src}
                 width={r3Poster.width}
                 height={r3Poster.height}
@@ -117,7 +117,10 @@ const avatar = avatarModule.default
                 playsinline
                 preload='metadata'
                 class='pointer-events-none block h-auto w-full'
-              ></video>
+              >
+                <source src={r3Webm} type='video/webm; codecs="vp9"' />
+                <source src={r3Video} type='video/mp4' />
+              </video>
             </button>
             <p class='text-sm leading-relaxed text-muted-foreground'>
               <strong class='whitespace-nowrap font-bold text-foreground underline underline-offset-2'>Jiazhe Wei</strong>,
@@ -179,7 +182,7 @@ const avatar = avatarModule.default
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     const coverHoldMs = 1500
     const openingBufferSeconds = 3
-    const preloadDeadlineMs = 10000
+    const preloadDeadlineMs = 2500
     let inView = false
     let waitingToAutoplay = true
     let pausedByUser = false
