@@ -12,7 +12,8 @@ import AwardCard from '@/components/honors/AwardCard.astro'
 import ProjectCard from '@/components/projects/ProjectCard.astro'
 import ShowcaseCard from '@/components/projects/ShowcaseCard.astro'
 import nwpuLogo from '@/assets/nwpu.png'
-import r3Method from '@/assets/r3-method.png'
+import r3Video from '@/assets/r3-nh-haze-24.mp4?url'
+import r3Poster from '@/assets/r3-nh-haze-24-poster.jpg'
 import zhongguancunAcademyLogo from '@/assets/zhongguancun-academy.png'
 import config from '@/site-config'
 
@@ -97,13 +98,20 @@ const avatar = avatarModule.default
               { label: 'Code', icon: 'github' }
             ]}
           >
-            <a slot='cover' href={r3Method.src} target='_blank' rel='noopener noreferrer'
-              aria-label='View full-size R³ method diagram'
-              class='block cursor-zoom-in focus-visible:outline-offset-[-3px]'>
-              <Image src={r3Method} alt='R³ perception and restoration stages connected by a region relation graph'
-                widths={[256, 384, 576, 960]} sizes='(min-width: 640px) min(36vw, 16rem), calc(100vw - 4rem)'
-                loading='lazy' class='block h-auto w-full' />
-            </a>
+            <video
+              slot='cover'
+              src={r3Video}
+              poster={r3Poster.src}
+              width={r3Poster.width}
+              height={r3Poster.height}
+              aria-label='R³ demo on NH-HAZE, sample 24'
+              controls
+              playsinline
+              preload='none'
+              class='block h-auto w-full'
+            >
+              <a href={r3Video}>Watch the R³ demo</a>
+            </video>
             <p class='text-sm leading-relaxed text-muted-foreground'>
               <strong class='whitespace-nowrap font-bold text-foreground underline underline-offset-2'>Jiazhe Wei</strong>,
               Kangbiao Shi, Pengwei Zhang, Wei Dong, Haofei Qian, Peng Wu, Axi Niu, Qingsen Yan<sup>†</sup>
