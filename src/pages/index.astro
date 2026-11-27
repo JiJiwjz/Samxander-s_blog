@@ -175,27 +175,51 @@ const avatar = avatarModule.default
   const toggle = demo?.closest('button')
   if (demo && toggle) {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const coverHoldMs = 3500
+    const openingBufferSeconds = 3
+    const preloadDeadlineMs = 10000
+    let inView = false
+    let waitingToAutoplay = true
+    let startTimer: number | undefined
+
     const play = () => {
+      waitingToAutoplay = false
+      window.clearTimeout(startTimer)
+      autoplay.disconnect()
+      document.removeEventListener('visibilitychange', scheduleAutoplay)
+      reducedMotion.removeEventListener('change', scheduleAutoplay)
       demo.play().catch(() => {
         // Browsers that block autoplay can retry on a click or tap.
       })
     }
-    const autoplay = new IntersectionObserver(([entry]) => {
-      if (entry.intersectionRatio >= 0.25) {
-        autoplay.disconnect()
-        if (!reducedMotion.matches) play()
+    const scheduleAutoplay = () => {
+      window.clearTimeout(startTimer)
+      if (!waitingToAutoplay || !inView || document.hidden || reducedMotion.matches) return
+
+      const deadline = performance.now() + preloadDeadlineMs
+      const startWhenBuffered = () => {
+        const buffered = demo.buffered
+        const openingReady = buffered.length > 0 && buffered.start(0) <= 0.05
+          && buffered.end(0) >= openingBufferSeconds
+        // Some browsers cap preloading until play() is requested.
+        if (openingReady || performance.now() >= deadline) play()
+        else startTimer = window.setTimeout(startWhenBuffered, 250)
       }
+      startTimer = window.setTimeout(startWhenBuffered, coverHoldMs)
+    }
+    const autoplay = new IntersectionObserver(([entry]) => {
+      inView = entry.intersectionRatio >= 0.25
+      scheduleAutoplay()
     }, { threshold: 0.25 })
     autoplay.observe(toggle)
+    document.addEventListener('visibilitychange', scheduleAutoplay)
+    reducedMotion.addEventListener('change', scheduleAutoplay)
 
     toggle.addEventListener('click', () => {
       if (demo.paused || demo.ended) play()
       else demo.pause()
     })
-    demo.addEventListener('play', () => {
-      autoplay.disconnect()
-      toggle.setAttribute('aria-label', 'Pause R³ demo')
-    })
+    demo.addEventListener('play', () => toggle.setAttribute('aria-label', 'Pause R³ demo'))
     demo.addEventListener('pause', () => toggle.setAttribute('aria-label', 'Play R³ demo'))
     demo.addEventListener('ended', () => { demo.style.visibility = 'hidden' })
     demo.addEventListener('playing', () => { demo.style.visibility = 'visible' })
