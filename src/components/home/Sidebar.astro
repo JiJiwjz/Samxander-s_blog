@@ -2,6 +2,7 @@
 import type { ImageMetadata } from 'astro'
 import { Image } from 'astro:assets'
 
+import { AuthorName } from 'astro-pure/components/basic'
 import { Icon } from 'astro-pure/user'
 import SkillLayout from '@/components/home/SkillLayout.astro'
 
@@ -44,7 +45,7 @@ const { avatar, name, subtitle, status, location, emails, contacts, cvUrl, skill
   />
 
   <div class='flex flex-col items-center gap-y-1 lg:items-start'>
-    <h1 class='font-serif text-2xl font-semibold'>{name}</h1>
+    <h1 class='font-serif text-2xl font-semibold'><AuthorName {name} /></h1>
     <p class='text-sm text-[hsl(var(--card-muted))]'>{subtitle}</p>
   </div>
 
