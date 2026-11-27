@@ -2,6 +2,7 @@
 import config from 'virtual:config'
 
 import { Icon } from '../user'
+import AuthorName from './AuthorName.astro'
 
 const footerConf = config.footer
 let social = footerConf.social || {}
@@ -36,7 +37,7 @@ const footerLink1 = footerConf.links?.filter(({ pos }) => pos === 1) || []
         {/* Position 2 */}
         <div>
           {config.footer.year}
-          {config.author}
+          <AuthorName name={config.author} />
           {
             footerConf.links && footerConf.links.length > 0 && (
               <>

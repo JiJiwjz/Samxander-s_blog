@@ -1,0 +1,16 @@
+---
+interface Props {
+  name: string
+}
+
+const { name } = Astro.props
+const parts = name.split(/(\p{Script=Han}+)/u)
+---
+
+{parts.map((part, i) => i % 2 === 1 ? <span class='han-name' lang='zh-CN'>{part}</span> : part)}
+
+<style>
+  .han-name {
+    font-family: 'Heiti SC', SimHei, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Noto Sans SC', sans-serif;
+  }
+</style>
