@@ -180,16 +180,20 @@ const avatar = avatarModule.default
         // Browsers that block autoplay can retry on a click or tap.
       })
     }
-    const playOnHover = (event: PointerEvent) => {
-      if (event.pointerType !== 'touch' && !reducedMotion.matches) play()
-    }
-    toggle.addEventListener('pointerenter', playOnHover)
+    const autoplay = new IntersectionObserver(([entry]) => {
+      if (entry.intersectionRatio >= 0.25) {
+        autoplay.disconnect()
+        if (!reducedMotion.matches) play()
+      }
+    }, { threshold: 0.25 })
+    autoplay.observe(toggle)
+
     toggle.addEventListener('click', () => {
       if (demo.paused || demo.ended) play()
       else demo.pause()
     })
     demo.addEventListener('play', () => {
-      toggle.removeEventListener('pointerenter', playOnHover)
+      autoplay.disconnect()
       toggle.setAttribute('aria-label', 'Pause R³ demo')
     })
     demo.addEventListener('pause', () => toggle.setAttribute('aria-label', 'Play R³ demo'))
