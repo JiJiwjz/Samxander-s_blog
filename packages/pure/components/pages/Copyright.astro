@@ -5,6 +5,7 @@ import config from 'virtual:config'
 
 import { cn, getFormattedDate } from '../../utils'
 import { QRCode } from '../advanced'
+import AuthorName from '../basic/AuthorName.astro'
 import { Icon } from '../user'
 
 interface Props<T extends CollectionKey> {
@@ -50,7 +51,7 @@ const shares = {
   <div class='flex flex-row flex-wrap justify-start gap-x-5 gap-y-1 sm:gap-x-8'>
     <div class='flex gap-x-2 sm:flex-col'>
       <span>Author</span>
-      <span class='text-sm text-foreground max-sm:place-self-center'>{config.author}</span>
+      <span class='text-sm text-foreground max-sm:place-self-center'><AuthorName name={config.author} /></span>
     </div>
     {
       publishDate && (
