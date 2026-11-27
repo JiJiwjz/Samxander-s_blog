@@ -14,6 +14,7 @@ import ShowcaseCard from '@/components/projects/ShowcaseCard.astro'
 import nwpuLogo from '@/assets/nwpu.png'
 import r3Video from '@/assets/r3-nh-haze-24.mp4?url'
 import r3Webm from '@/assets/r3-nh-haze-24.webm?url'
+import r3Cover from '@/assets/r3-cover.html?url'
 import r3Poster from '@/assets/r3-nh-haze-24-poster.jpg'
 import zhongguancunAcademyLogo from '@/assets/zhongguancun-academy.png'
 import config from '@/site-config'
@@ -100,28 +101,23 @@ const avatar = avatarModule.default
               { label: 'Code', icon: 'github' }
             ]}
           >
-            <button
+            <div
               slot='cover'
-              type='button'
-              aria-label='Play R³ demo'
-              class='block w-full cursor-pointer bg-cover bg-center p-0 focus-visible:outline-offset-[-3px]'
+              id='r3-preview'
+              class='relative aspect-video w-full bg-cover bg-center'
               style={{ backgroundImage: `url("${r3Poster.src}")` }}
             >
-              <video
-                id='r3-demo'
-                poster={r3Poster.src}
-                width={r3Poster.width}
-                height={r3Poster.height}
-                aria-hidden='true'
-                muted
-                playsinline
-                preload='metadata'
-                class='pointer-events-none block h-auto w-full'
-              >
-                <source src={r3Webm} type='video/webm; codecs="vp9"' />
-                <source src={r3Video} type='video/mp4' />
-              </video>
-            </button>
+              <iframe id='r3-cover' src={r3Cover} title='R³ animated cover' tabindex='-1'
+                aria-hidden='true' loading='eager' class='pointer-events-none absolute inset-0 size-full border-0' />
+              <button type='button' aria-label='Play R³ demo'
+                class='absolute inset-0 size-full cursor-pointer bg-transparent p-0 focus-visible:outline-offset-[-3px]'>
+                <video id='r3-demo' width={r3Poster.width} height={r3Poster.height} aria-hidden='true'
+                  muted playsinline preload='none' class='pointer-events-none block size-full'>
+                  <source src={r3Webm} type='video/webm; codecs="vp9"' />
+                  <source src={r3Video} type='video/mp4' />
+                </video>
+              </button>
+            </div>
             <p class='text-sm leading-relaxed text-muted-foreground'>
               <strong class='whitespace-nowrap font-bold text-foreground underline underline-offset-2'>Jiazhe Wei</strong>,
               Kangbiao Shi, Pengwei Zhang, Wei Dong, Haofei Qian, Peng Wu, Axi Niu, Qingsen Yan<sup>†</sup>
@@ -175,89 +171,54 @@ const avatar = avatarModule.default
 </PageLayout>
 
 <script>
-  const demo = document.querySelector<HTMLVideoElement>('#r3-demo')
-  const toggle = demo?.closest('button')
-  if (demo && toggle) {
-    const card = toggle.closest('article') ?? toggle
+  const preview = document.querySelector<HTMLElement>('#r3-preview')
+  const demo = preview?.querySelector('video')
+  const toggle = preview?.querySelector('button')
+  if (preview && demo && toggle) {
+    const card = preview.closest('article') ?? preview
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const coverHoldMs = 1500
-    const openingBufferSeconds = 3
-    const preloadDeadlineMs = 2500
-    let inView = false
-    let waitingToAutoplay = true
     let pausedByUser = false
-    let startTimer: number | undefined
+    let hovered = false
 
     const play = () => {
+      if (demo.error) demo.load()
       demo.play().catch((error) => {
-        if (error.name === 'NotAllowedError' && demo.paused) toggle.title = 'Click to play the R³ demo'
+        if (error.name !== 'AbortError') toggle.title = 'Click to play the R³ demo'
       })
     }
-    const playOnHover = (event: PointerEvent) => {
-      if (event.pointerType !== 'mouse' || pausedByUser || demo.ended || document.hidden || reducedMotion.matches) return
-      if (demo.paused) play()
+    const showCover = () => {
+      delete preview.dataset.video
+      toggle.setAttribute('aria-label', 'Play R³ demo')
     }
-    const stopAutomaticStart = () => {
-      waitingToAutoplay = false
-      window.clearTimeout(startTimer)
-      autoplay.disconnect()
-      document.removeEventListener('visibilitychange', scheduleAutoplay)
-      reducedMotion.removeEventListener('change', scheduleAutoplay)
-    }
-    const scheduleAutoplay = () => {
-      window.clearTimeout(startTimer)
-      if (!waitingToAutoplay || !inView || document.hidden || reducedMotion.matches) return
 
-      const deadline = performance.now() + preloadDeadlineMs
-      const startWhenBuffered = () => {
-        const buffered = demo.buffered
-        const openingReady = buffered.length > 0 && buffered.start(0) <= 0.05
-          && buffered.end(0) >= openingBufferSeconds
-        // Some browsers cap preloading until play() is requested.
-        if (openingReady || performance.now() >= deadline) play()
-        else startTimer = window.setTimeout(startWhenBuffered, 250)
-      }
-      startTimer = window.setTimeout(startWhenBuffered, coverHoldMs)
-    }
-    const autoplay = new IntersectionObserver(([entry]) => {
-      inView = entry.intersectionRatio >= 0.25
-      scheduleAutoplay()
-    }, { threshold: 0.25 })
-    autoplay.observe(toggle)
-    card.addEventListener('pointerenter', playOnHover)
-    document.addEventListener('visibilitychange', scheduleAutoplay)
-    reducedMotion.addEventListener('change', scheduleAutoplay)
-
+    // A real mouse movement keeps a parked pointer from skipping the opening cover on load.
+    card.addEventListener('pointermove', (event) => {
+      if (event.pointerType !== 'mouse' || hovered || reducedMotion.matches || document.hidden) return
+      hovered = true
+      if (demo.paused && !pausedByUser) play()
+    })
+    card.addEventListener('pointerleave', () => { hovered = false })
     toggle.addEventListener('click', () => {
-      if (demo.paused || demo.ended) {
-        pausedByUser = false
-        play()
-      } else {
-        pausedByUser = true
-        stopAutomaticStart()
-        demo.pause()
-      }
+      pausedByUser = !demo.paused && !demo.ended
+      if (pausedByUser) demo.pause()
+      else play()
     })
-    demo.addEventListener('play', () => toggle.setAttribute('aria-label', 'Pause R³ demo'))
-    demo.addEventListener('pause', () => toggle.setAttribute('aria-label', 'Play R³ demo'))
-    demo.addEventListener('ended', () => { demo.style.visibility = 'hidden' })
     demo.addEventListener('playing', () => {
-      stopAutomaticStart()
+      preview.dataset.video = 'visible'
+      toggle.setAttribute('aria-label', 'Pause R³ demo')
       toggle.removeAttribute('title')
-      demo.style.visibility = 'visible'
     })
-
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        demo.preload = 'auto'
-        observer.disconnect()
-      }
-    }, { rootMargin: '300px 0px' })
-    observer.observe(demo)
+    demo.addEventListener('pause', () => toggle.setAttribute('aria-label', 'Play R³ demo'))
+    demo.addEventListener('ended', showCover)
+    demo.addEventListener('error', showCover)
   }
 </script>
 
 <style is:global>
+  #r3-demo { opacity: 0; }
+  #r3-preview[data-video] #r3-demo { opacity: 1; }
+  #r3-preview[data-video] #r3-cover { visibility: hidden; }
+
   #r3-demo::-webkit-media-controls-start-playback-button {
     display: none;
   }
