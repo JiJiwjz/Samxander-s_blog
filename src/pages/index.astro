@@ -100,14 +100,16 @@ const avatar = avatarModule.default
           >
             <video
               slot='cover'
+              id='r3-demo'
               src={r3Video}
               poster={r3Poster.src}
               width={r3Poster.width}
               height={r3Poster.height}
               aria-label='R³ demo on NH-HAZE, sample 24'
               controls
+              muted
               playsinline
-              preload='none'
+              preload='metadata'
               class='block h-auto w-full'
             >
               <a href={r3Video}>Watch the R³ demo</a>
@@ -162,6 +164,29 @@ const avatar = avatarModule.default
     </div>
   </main>
 </PageLayout>
+
+<script>
+  const demo = document.querySelector<HTMLVideoElement>('#r3-demo')
+  if (demo) {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const playOnHover = (event: PointerEvent) => {
+      if (event.pointerType === 'touch' || reducedMotion.matches) return
+      demo.play().catch(() => {
+        // Browsers can require a tap on the native play control.
+      })
+    }
+    demo.addEventListener('pointerenter', playOnHover)
+    demo.addEventListener('play', () => demo.removeEventListener('pointerenter', playOnHover), { once: true })
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        demo.preload = 'auto'
+        observer.disconnect()
+      }
+    }, { rootMargin: '300px 0px' })
+    observer.observe(demo)
+  }
+</script>
 
 <style is:global>
   html.dark body[data-home] {
