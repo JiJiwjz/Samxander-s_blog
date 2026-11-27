@@ -98,26 +98,31 @@ const avatar = avatarModule.default
               { label: 'Code', icon: 'github' }
             ]}
           >
-            <video
+            <button
               slot='cover'
-              id='r3-demo'
-              src={r3Video}
-              poster={r3Poster.src}
-              width={r3Poster.width}
-              height={r3Poster.height}
-              aria-label='R³ demo on NH-HAZE, sample 24'
-              controls
-              muted
-              playsinline
-              preload='metadata'
-              class='block h-auto w-full'
+              type='button'
+              aria-label='Play R³ demo'
+              class='block w-full cursor-pointer bg-cover bg-center p-0 focus-visible:outline-offset-[-3px]'
+              style={{ backgroundImage: `url("${r3Poster.src}")` }}
             >
-              <a href={r3Video}>Watch the R³ demo</a>
-            </video>
+              <video
+                id='r3-demo'
+                src={r3Video}
+                poster={r3Poster.src}
+                width={r3Poster.width}
+                height={r3Poster.height}
+                aria-hidden='true'
+                muted
+                playsinline
+                preload='metadata'
+                class='pointer-events-none block h-auto w-full'
+              ></video>
+            </button>
             <p class='text-sm leading-relaxed text-muted-foreground'>
               <strong class='whitespace-nowrap font-bold text-foreground underline underline-offset-2'>Jiazhe Wei</strong>,
               Kangbiao Shi, Pengwei Zhang, Wei Dong, Haofei Qian, Peng Wu, Axi Niu, Qingsen Yan<sup>†</sup>
             </p>
+            <noscript><a href={r3Video}>Watch the R³ demo</a></noscript>
           </ShowcaseCard>
         </Section>
       </div>
@@ -167,16 +172,29 @@ const avatar = avatarModule.default
 
 <script>
   const demo = document.querySelector<HTMLVideoElement>('#r3-demo')
-  if (demo) {
+  const toggle = demo?.closest('button')
+  if (demo && toggle) {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const playOnHover = (event: PointerEvent) => {
-      if (event.pointerType === 'touch' || reducedMotion.matches) return
+    const play = () => {
       demo.play().catch(() => {
-        // Browsers can require a tap on the native play control.
+        // Browsers that block autoplay can retry on a click or tap.
       })
     }
-    demo.addEventListener('pointerenter', playOnHover)
-    demo.addEventListener('play', () => demo.removeEventListener('pointerenter', playOnHover), { once: true })
+    const playOnHover = (event: PointerEvent) => {
+      if (event.pointerType !== 'touch' && !reducedMotion.matches) play()
+    }
+    toggle.addEventListener('pointerenter', playOnHover)
+    toggle.addEventListener('click', () => {
+      if (demo.paused || demo.ended) play()
+      else demo.pause()
+    })
+    demo.addEventListener('play', () => {
+      toggle.removeEventListener('pointerenter', playOnHover)
+      toggle.setAttribute('aria-label', 'Pause R³ demo')
+    })
+    demo.addEventListener('pause', () => toggle.setAttribute('aria-label', 'Play R³ demo'))
+    demo.addEventListener('ended', () => { demo.style.visibility = 'hidden' })
+    demo.addEventListener('playing', () => { demo.style.visibility = 'visible' })
 
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
@@ -189,6 +207,10 @@ const avatar = avatarModule.default
 </script>
 
 <style is:global>
+  #r3-demo::-webkit-media-controls-start-playback-button {
+    display: none;
+  }
+
   html.dark body[data-home] {
     --foreground: 260 54.5% 95.7%;
     --muted-foreground: 257.1 20.6% 86.7%;
