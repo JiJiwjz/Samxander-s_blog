@@ -175,23 +175,31 @@ const avatar = avatarModule.default
   const demo = document.querySelector<HTMLVideoElement>('#r3-demo')
   const toggle = demo?.closest('button')
   if (demo && toggle) {
+    const card = toggle.closest('article') ?? toggle
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     const coverHoldMs = 1500
     const openingBufferSeconds = 3
     const preloadDeadlineMs = 10000
     let inView = false
     let waitingToAutoplay = true
+    let pausedByUser = false
     let startTimer: number | undefined
 
     const play = () => {
+      demo.play().catch((error) => {
+        if (error.name === 'NotAllowedError' && demo.paused) toggle.title = 'Click to play the R³ demo'
+      })
+    }
+    const playOnHover = (event: PointerEvent) => {
+      if (event.pointerType !== 'mouse' || pausedByUser || demo.ended || document.hidden || reducedMotion.matches) return
+      if (demo.paused) play()
+    }
+    const stopAutomaticStart = () => {
       waitingToAutoplay = false
       window.clearTimeout(startTimer)
       autoplay.disconnect()
       document.removeEventListener('visibilitychange', scheduleAutoplay)
       reducedMotion.removeEventListener('change', scheduleAutoplay)
-      demo.play().catch(() => {
-        // Browsers that block autoplay can retry on a click or tap.
-      })
     }
     const scheduleAutoplay = () => {
       window.clearTimeout(startTimer)
@@ -213,17 +221,28 @@ const avatar = avatarModule.default
       scheduleAutoplay()
     }, { threshold: 0.25 })
     autoplay.observe(toggle)
+    card.addEventListener('pointerenter', playOnHover)
     document.addEventListener('visibilitychange', scheduleAutoplay)
     reducedMotion.addEventListener('change', scheduleAutoplay)
 
     toggle.addEventListener('click', () => {
-      if (demo.paused || demo.ended) play()
-      else demo.pause()
+      if (demo.paused || demo.ended) {
+        pausedByUser = false
+        play()
+      } else {
+        pausedByUser = true
+        stopAutomaticStart()
+        demo.pause()
+      }
     })
     demo.addEventListener('play', () => toggle.setAttribute('aria-label', 'Pause R³ demo'))
     demo.addEventListener('pause', () => toggle.setAttribute('aria-label', 'Play R³ demo'))
     demo.addEventListener('ended', () => { demo.style.visibility = 'hidden' })
-    demo.addEventListener('playing', () => { demo.style.visibility = 'visible' })
+    demo.addEventListener('playing', () => {
+      stopAutomaticStart()
+      toggle.removeAttribute('title')
+      demo.style.visibility = 'visible'
+    })
 
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
